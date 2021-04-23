@@ -1,3 +1,4 @@
+import 'package:cs310_app/models/bottomBar.dart';
 import 'package:cs310_app/utils/categories.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class _SearchState extends State<Search> {
         ),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -49,6 +50,8 @@ class _SearchState extends State<Search> {
             ],
 
           ),
+
+          BottomBar(),
         ],
       ),
     );

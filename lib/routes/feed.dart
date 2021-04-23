@@ -11,17 +11,14 @@ class Feed extends StatelessWidget {
             centerTitle: true,
           ),
           body:Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) => CardItem(),
-                ),
-              ),
+              Divider(),
 
 
-              Expanded(flex:1,child: BottomBar(),)
+              BottomBar(),
+
             ],
           ),
         );

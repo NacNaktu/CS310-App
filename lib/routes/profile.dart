@@ -1,3 +1,4 @@
+import 'package:cs310_app/models/bottomBar.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -149,35 +150,13 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             )  */
+            BottomBar(),
           ],
+
         ),
+
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_box),
-            label: 'More',
-          ),
-        ],
-        iconSize: 20,
-        backgroundColor: Colors.black,
-        fixedColor: Colors.black,
-        unselectedItemColor: Colors.black,
-        showUnselectedLabels: true,
-        onTap: (index) => onTap(index),
-      ),
+
     );
   }
 }

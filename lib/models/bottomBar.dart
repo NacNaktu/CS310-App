@@ -7,23 +7,57 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  List<String> categories = ["Computer", "Telephone", "Television", "Vaccum"];
+
+  int index = 0;
+
+  var routes = {
+    0 : '/welcome',
+    1 : '/search',
+    2 : '/profile',
+  };
+
+  void onTap (int index)  {
+    Navigator.pushNamed(context, routes[index]);
+  }
 
   // By default our first item will be selected
-  int selectedIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        IconButton(
-          icon: Icon(Icons.home, color: Colors.white,),
+    return
+      Expanded(
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              label: 'Profile',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add_box),
+              label: 'More',
+            ),
+          ],
+          iconSize: 20,
+          backgroundColor: Colors.black,
+          unselectedItemColor: Colors.black,
+          showUnselectedLabels: true,
+          onTap: (index) => onTap(index),
+            currentIndex: index,
+            selectedItemColor: Colors.blue,
 
+    ),
         ),
-        IconButton(icon: Icon(Icons.search, color: Colors.white,),),
-        IconButton(icon: Icon(Icons.person, color: Colors.white,),),
-      ],
-    );
+      );
   }
 }
