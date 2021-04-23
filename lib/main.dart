@@ -1,4 +1,5 @@
 import 'package:cs310_app/routes/login.dart';
+import 'package:cs310_app/routes/search.dart';
 import 'package:cs310_app/routes/signup.dart';
 import 'package:cs310_app/routes/walkthrough.dart';
 import 'package:cs310_app/routes/welcome.dart';
@@ -20,6 +21,8 @@ void main() => runApp(MaterialApp(
     '/welcome': (context) => Welcome(),
     '/login': (context) => Login(),
     '/signup': (context) => SignUp(),
+    '/search': (context) => Search(),
+
   },
 ));
 
