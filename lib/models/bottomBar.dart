@@ -14,17 +14,15 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    return TabBar(
-      controller: DefaultTabController,
-      tabs: <Widget>[
-        Tab(child: IconButton(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        IconButton(
           icon: Icon(Icons.home, color: Colors.white,),
 
         ),
-        ),
-        Tab(child: Icon(Icons.search, color: Colors.white,)),
-        Tab(child: Icon(Icons.person, color: Colors.white,)),
-        Tab(child: Icon(Icons.add_circle_outline, color: Colors.white,)),
+        IconButton(icon: Icon(Icons.search, color: Colors.white,),),
+        IconButton(icon: Icon(Icons.person, color: Colors.white,),),
       ],
     );
   }

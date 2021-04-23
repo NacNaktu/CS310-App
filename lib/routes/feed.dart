@@ -20,7 +20,8 @@ class Feed extends StatelessWidget {
                 ),
               ),
 
-              BottomBar()
+
+              Expanded(flex:1,child: BottomBar(),)
             ],
           ),
         );
