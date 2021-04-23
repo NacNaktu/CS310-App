@@ -58,4 +58,22 @@ final errorStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+final underlinedStyle = TextStyle(
+    color: AppColors.textColor,
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    height: 1.7,
+    decoration: TextDecoration.underline,
+    letterSpacing: 1.5
+
+);
+
+final ButtonStyle profilePageButtonStyle = TextButton.styleFrom(
+  primary: Colors.black87,
+  minimumSize: Size(100, 50),
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+  ),
+);
+
 
