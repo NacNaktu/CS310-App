@@ -17,6 +17,7 @@ class _BottomBarState extends State<BottomBar> {
   };
 
   void onTap (int index)  {
+    Navigator.pop(context);
     Navigator.pushNamed(context, routes[index]);
   }
 
@@ -26,38 +27,33 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return
-      Expanded(
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-              label: 'Profile',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_box),
-              label: 'More',
-            ),
-          ],
-          iconSize: 20,
-          backgroundColor: Colors.black,
-          unselectedItemColor: Colors.black,
-          showUnselectedLabels: true,
-          onTap: (index) => onTap(index),
-            currentIndex: index,
-            selectedItemColor: Colors.blue,
-
-    ),
+      BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
         ),
-      );
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          label: 'Search',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.account_circle),
+          label: 'Profile',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.add_box),
+          label: 'More',
+        ),
+      ],
+      iconSize: 20,
+      backgroundColor: Colors.black,
+      unselectedItemColor: Colors.black,
+      showUnselectedLabels: true,
+      onTap: (index) => onTap(index),
+        currentIndex: index,
+        selectedItemColor: Colors.blue,
+
+    );
   }
 }

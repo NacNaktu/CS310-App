@@ -15,6 +15,7 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomBar(),
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Expanded(
@@ -51,7 +52,7 @@ class _SearchState extends State<Search> {
 
           ),
 
-          BottomBar(),
+
         ],
       ),
     );

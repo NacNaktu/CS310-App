@@ -9,23 +9,16 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String mail, pass, pass2, name, userName;
+
   bool _isRecording = true;
 
-  var routes = {
-    0 : '/welcome',
-    1 : '/login',
-  };
-
-  void onTap (int index)  {
-    Navigator.pushNamed(context, routes[index]);
-  }
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomBar(),
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(
@@ -124,33 +117,7 @@ class _ProfileState extends State<Profile> {
                   )
               ),
             ),
-            /*   Container(
-              color: Colors.red,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.home),
-                    iconSize: 40.0,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.search),
-                    iconSize: 40.0,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.account_circle),
-                    iconSize: 40.0,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.add_box),
-                    iconSize: 40.0,
-                  ),
 
-
-                ],
-              ),
-            )  */
-            BottomBar(),
           ],
 
         ),
