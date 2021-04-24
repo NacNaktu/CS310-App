@@ -1,7 +1,7 @@
-import 'dart:html';
-import 'dart:js';
+
+
 import 'package:flutter/material.dart';
-import 'package:cs310projectpart/main.dart';
+
 
 
 class NotifCardFollow extends StatelessWidget {
