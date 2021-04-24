@@ -1,134 +1,124 @@
+
+import 'package:cs310_app/utils/color.dart';
+import 'package:cs310_app/utils/styles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProfileSettings extends StatelessWidget {
+class ProfileSettings extends StatefulWidget {
+  @override
+  _ProfileSettingsState createState() => _ProfileSettingsState();
+}
+
+class _ProfileSettingsState extends State<ProfileSettings> {
+  bool _visible = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          backgroundColor: AppColors.appBarColour,
+          title: Text("EDIT PROFILE"),
+          centerTitle: true,
+        ),
         body: Center(
+          child: Container(
+            color: Colors.transparent,
+            height: 400,
+            padding: EdgeInsets.all(20),
+
+
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+
               children: <Widget>[
 
                 // ignore: deprecated_member_use
-                RaisedButton.icon(
-                  onPressed: () {
-                    print('Change Username');
-                  },
+                RaisedButton(
+                  onPressed: () {},
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  label: Text('Button With Left Icon',
-                    style: TextStyle(color: Colors.white),),
-                  icon: Icon(Icons.android, color: Colors.white,),
-                  textColor: Colors.white,
-                  splashColor: Colors.red,
-                  color: Colors.green,),
+                  child: Text("Change Username",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                      letterSpacing: 2.2,
+                    ),
+                  ),
 
 
-                RaisedButton.icon(
-                  onPressed: () {
-                    print('Button Clicked.');
-                  },
+                ),
+                RaisedButton(
+                  onPressed: () {},
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  label: Text('Change Password',
-                    style: TextStyle(color: Colors.white),),
-                  icon: Icon(Icons.camera_alt, color: Colors.white,),
-                  textColor: Colors.white,
-                  splashColor: Colors.red,
-                  color: Colors.lightBlue,),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(10.0))),
+                  child: Text('Change Password',
+                    style: TextStyle(fontSize: 14,
+                      color: Colors.black,
+                      letterSpacing: 2.2,
+                    ),
+                  ),
+                ),
 
-                RaisedButton.icon(
-                  onPressed: () {
-                    print('Change Username');
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  label: Text('Account Visibility',
-                    style: TextStyle(color: Colors.white),),
-                  icon: Icon(Icons.android, color: Colors.white,),
-                  textColor: Colors.white,
-                  splashColor: Colors.red,
-                  color: Colors.green,),
+                MergeSemantics(
+                  child: Container(
+                    width: 200,
+                    child: ListTile(
+                      title: Text('Account Visibility',
+                        style: mainTextStyle,),
 
-                RaisedButton.icon(
-                  onPressed: () {
-                    print('Button Clicked.');
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  label: Text('Change Password',
-                    style: TextStyle(color: Colors.white),),
-                  icon: Icon(Icons.camera_alt, color: Colors.white,),
-                  textColor: Colors.white,
-                  splashColor: Colors.red,
-                  color: Colors.lightBlue,),
-
-                RaisedButton.icon(
-                  onPressed: () {
-                    print('Change Username');
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  label: Text('Deactivate my Account',
-                    style: TextStyle(color: Colors.white),),
-                  icon: Icon(Icons.android, color: Colors.white,),
-                  textColor: Colors.white,
-                  splashColor: Colors.red,
-                  color: Colors.green,),
-
-                RaisedButton.icon(
-                  onPressed: () {
-                    print('Button Clicked.');
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  label: Text('Delete my Account',
-                    style: TextStyle(color: Colors.white),),
-                  icon: Icon(Icons.camera_alt, color: Colors.white,),
-                  textColor: Colors.white,
-                  splashColor: Colors.red,
-                  color: Colors.lightBlue,),
-
-
-                Container(
-                    width: 210,
-                    child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(10.0))),
-                        onPressed: () {
-                          print('Button Clicked.');
+                      trailing: CupertinoSwitch(
+                        value: _visible,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _visible = value;
+                          });
                         },
-                        textColor: Colors.white,
-                        color: Colors.pink,
-                        padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                        child: Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
+                      ),
+                      onTap: () {
+                        setState(() {
+                          _visible = !_visible;
+                        });
+                      },
+                    ),
+                  ),
+                ),
 
-                                Container(
-                                  color: Colors.pink,
-                                  padding: EdgeInsets.fromLTRB(10, 4, 4, 4),
-                                  child: Text('Button With Right Icon',
-                                    style: TextStyle(color: Colors.white),),
-                                ),
 
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(4, 0, 10, 0),
-                                  child: Icon(
-                                    Icons.backup,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                ),
-                              ],
-                            ))))
-              ],)
-        )
+                RaisedButton(
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(10.0))),
+                  child: Text('Deactive myAccount',
+                    style: TextStyle(fontSize: 14,
+                      color: Colors.black,
+                      letterSpacing: 2.2,
+                    ),
+                  ),
+
+                ),
+
+                RaisedButton(
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(10.0))),
+                  child: Text('Delete myAccount',
+                    style: TextStyle(fontSize: 14,
+                      color: Colors.black,
+                      letterSpacing: 2.2,
+                    ),
+                  ),
+                ),
+
+
+              ],
+            ),
+          ),
+        ),
     );
   }
 }

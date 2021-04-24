@@ -12,14 +12,17 @@ class UserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Column(
-        children: [
-          ListTile(
-            leading: CircleAvatar(),
-            title: Text(user.name + " " + user.surname),
-            subtitle: Text(user.username),
-          ),
-        ],
+      child: Container(
+        height: 80,
+        child: Column(
+          children: [
+            ListTile(
+              leading: CircleAvatar(),
+              title: Text(user.name + " " + user.surname),
+              subtitle: Text(user.username),
+            ),
+          ],
+        ),
       ),
     );
   }
