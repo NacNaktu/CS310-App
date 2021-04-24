@@ -28,7 +28,7 @@ class _NotState extends State<Not> {
         appBar: AppBar(
           title: Text('Notifications'),
           centerTitle: true,
-          backgroundColor: ,
+          backgroundColor: AppColors.appBarColour,
         ),
         body: Column(
           children: nots.map((notif) => NotCard(notif: notif)).toList(),
