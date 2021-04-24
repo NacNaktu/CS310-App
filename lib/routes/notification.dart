@@ -11,18 +11,16 @@ class Not extends StatefulWidget {
 
 class _NotState extends State<Not> {
   List<Notif> nots = [
-    Notif(note: 'ABC liked your post', date: '8 May'),
-    Notif(note: 'You have new followers!', date: '7 May'),
-    Notif(note: 'X followed you', date: '7 May'),
-    Notif(note: 'Y followed you', date: '7 May'),
-    Notif(note: 'Y liked your post', date: '7 May'),
-  ];
+    Notif(note: 'Elon Musk liked your post', date: '8 May'),
+    Notif(note: 'Rihanna followed you', date: '7 May'),
+    Notif(note: 'Dua Lipa followed you', date: '7 May'),
+    Notif(note: 'Dua Lipa liked your post', date: '7 May'),
+    Notif(note: 'Keanu Reeves followed you', date: '6 May'),
+    Notif(note: 'Jared Leto followed you', date: '6 May'),
+    Notif(note: 'Johnny Depp liked your post', date: '6 May'),
+    Notif(note: 'Kylie Jenner commented your post', date: '5 May'),
 
-  void deleteNot(Notif notif) {
-    setState(() {
-      nots.remove(notif);
-    });
-  }
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -30,24 +28,10 @@ class _NotState extends State<Not> {
         appBar: AppBar(
           title: Text('Notifications'),
           centerTitle: true,
-          backgroundColor: AppColors.appBarColour,
+          backgroundColor: ,
         ),
         body: Column(
-          children: [
-            GridView.builder(
-                itemCount: nots.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 20,
-                  childAspectRatio: 0.75,
-                ),
-                itemBuilder: (context, index) => NotCard(
-                  //not: nots[index],
-                  ),
-                ),
-          ]
-        ),
-    );
+          children: nots.map((notif) => NotCard(notif: notif)).toList(),
+        ));
   }
 }
