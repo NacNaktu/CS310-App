@@ -38,6 +38,7 @@ class Comment {
 class Notif {
   String note;
   String date;
+  User reason;
 
   Notif({this.note, this.date});
 }
@@ -48,9 +49,5 @@ class Notif {
 
 
 
-class NotifCard {
-  String message, follow, like;
 
-  NotifCard({this.message, this.follow, this.like});
-}
 
