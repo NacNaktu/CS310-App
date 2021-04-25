@@ -19,9 +19,10 @@ class _SearchState extends State<Search> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        bottomNavigationBar: BottomBar(),
+        bottomNavigationBar: BottomBar(index: 1),
         backgroundColor: AppColors.background,
         appBar: AppBar(
+          backwardsCompatibility: false,
           backgroundColor: AppColors.appBarColour,
           title: Expanded(
             flex: 1,

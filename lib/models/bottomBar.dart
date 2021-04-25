@@ -3,17 +3,28 @@ import 'package:flutter/material.dart';
 
 class BottomBar extends StatefulWidget {
   @override
-  _BottomBarState createState() => _BottomBarState();
+  _BottomBarState createState() => _BottomBarState(index);
+
+  final int index;  // <--- generates the error, "Field doesn't override an inherited getter or setter"
+  BottomBar({
+    int index
+  }): this.index = index;
+
 }
 
 class _BottomBarState extends State<BottomBar> {
 
-  int index = 0;
+
+  _BottomBarState(this.index);
+  final int index;
+
+
 
   var routes = {
-    0 : '/welcome',
+    0 : '/feed',
     1 : '/search',
     2 : '/profile',
+    3 : '/notification'
   };
 
   void onTap (int index)  {
@@ -42,9 +53,10 @@ class _BottomBarState extends State<BottomBar> {
           label: 'Profile',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.add_box),
-          label: 'More',
+          icon: Icon(Icons.notifications),
+          label: 'Notifications',
         ),
+
       ],
       iconSize: 20,
       backgroundColor: Colors.black,

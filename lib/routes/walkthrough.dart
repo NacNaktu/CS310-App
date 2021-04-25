@@ -1,14 +1,20 @@
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class WalkThrough extends StatefulWidget {
+
   @override
   _WalkThroughState createState() => _WalkThroughState();
 }
 
 class _WalkThroughState extends State {
+  Future<bool> isOpened;
+
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   int currPage, totalPage;
   String currImage, currTitle, currPageTitle, currCaption, buttonText;
 
@@ -35,8 +41,32 @@ class _WalkThroughState extends State {
 
   List<String> buttonTextList = ["Next", "Next", "Next", "Finish"];
 
+  Future<void> autoNavigate() async {
+    final SharedPreferences prefs = await _prefs;
+
+    final bool isOpened = prefs.getBool('firstOpen') ;
+
+    if(isOpened){
+      Navigator.pop(context);
+      Navigator.pushNamed(context, "/welcome");
+    }
+
+  }
+
   @override
   void initState() {
+
+    autoNavigate();
+
+
+
+
+    _prefs.then((SharedPreferences prefs) {
+          prefs.setBool("firstOpen",true);
+    });
+
+
+
     super.initState();
     currPage = 1;
     totalPage = 4;

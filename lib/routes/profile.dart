@@ -22,9 +22,12 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: BottomBar(index: 2),
+
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        backwardsCompatibility: false,
+
         title: Text(
           'Profile Page',
           style: appBarStyle,

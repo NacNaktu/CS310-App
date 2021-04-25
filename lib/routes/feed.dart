@@ -9,11 +9,12 @@ class Feed extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backwardsCompatibility: false,
         backgroundColor: AppColors.appBarColour,
         title: Text("Feed Page"),
         centerTitle: true,
       ),
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: BottomBar(index:0),
       body:Column(
         children: [
           Expanded(

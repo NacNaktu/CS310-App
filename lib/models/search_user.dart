@@ -26,7 +26,7 @@ class _SearchUserState extends State<SearchUser> {
                   crossAxisCount: 1,
                   mainAxisSpacing: 20,
                   crossAxisSpacing: 20,
-                  childAspectRatio: 0.75,
+                  childAspectRatio: 4,
                 ),
                 itemBuilder: (context, index) => UserCard(
                   user: searchUser[index],

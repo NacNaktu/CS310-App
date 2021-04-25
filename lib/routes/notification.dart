@@ -35,7 +35,7 @@ class _NotState extends State<Not> {
                       crossAxisCount: 1,
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
-                      childAspectRatio: 0.75,
+                      childAspectRatio: 4,
                     ),
                     itemBuilder: (context, index) => NotCard(
                       notif: nots[index],
