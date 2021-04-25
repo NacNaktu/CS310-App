@@ -1,3 +1,4 @@
+import 'package:cs310_app/models/bottomBar.dart';
 import 'package:cs310_app/models/notification_card.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/grid_view.dart';
@@ -15,11 +16,13 @@ class _NotState extends State<Not> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
         appBar: AppBar(
           title: Text('Notifications'),
           centerTitle: true,
           backgroundColor: AppColors.appBarColour,
         ),
+        bottomNavigationBar: BottomBar(index: 3),
         body: Column(
           children: [
             Expanded(

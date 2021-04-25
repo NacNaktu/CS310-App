@@ -15,10 +15,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() => runApp(MaterialApp(
 
 
-  initialRoute: '/',
+  //initialRoute: '/',
+  home: Feed(),
 
   routes: {
-    '/': (context) => WalkThrough(),
+    //'/': (context) => WalkThrough(),
     '/welcome': (context) => Welcome(),
     '/login': (context) => Login(),
     '/signup': (context) => SignUp(),
