@@ -8,18 +8,17 @@ import 'package:cs310_app/routes/signup.dart';
 import 'package:cs310_app/routes/walkthrough.dart';
 import 'package:cs310_app/routes/welcome.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 
 void main() => runApp(MaterialApp(
 
 
-  //initialRoute: '/',
-  home: Feed(),
+  initialRoute: '/',
+  home: WalkThrough(),
 
   routes: {
-    //'/': (context) => WalkThrough(),
+    '/': (context) => WalkThrough(),
     '/welcome': (context) => Welcome(),
     '/login': (context) => Login(),
     '/signup': (context) => SignUp(),
