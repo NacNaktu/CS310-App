@@ -1,3 +1,4 @@
+import 'package:cs310_app/firebase/analytics_service.dart';
 import 'package:cs310_app/firebase/authentication_service.dart';
 import 'package:cs310_app/routes/feed.dart';
 import 'package:cs310_app/routes/login.dart';
@@ -12,6 +13,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
+import 'locator.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
@@ -28,6 +32,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
+        navigatorObservers: [locator<AnalyticsService>().getAnalyticsObserver()],
 
 
 
@@ -54,6 +59,7 @@ class MyApp extends StatelessWidget {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  setupLocator();
 
   runApp(MyApp());
 
@@ -65,7 +71,6 @@ class AuthenticationWrapper extends StatelessWidget {
     final firebaseUser = context.watch<User>();
 
     if (firebaseUser != null) {
-      print("ashjidhajshdlsjahd");
       return Feed();
     }else{
       return WalkThrough();

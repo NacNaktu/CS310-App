@@ -5,6 +5,7 @@ import 'package:cs310_app/utils/styles.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 import '../main.dart';
 
@@ -15,6 +16,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   String mail, pass;
+
+
 
   final _formKey = GlobalKey<FormState>();
 
@@ -51,6 +54,15 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    void _showButtonPressDialog(BuildContext context, String provider) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('$provider Button Pressed!'),
+        backgroundColor: Colors.black26,
+        duration: Duration(milliseconds: 400),
+      ));}
+
     return Scaffold(
       backgroundColor: AppColors.background,
 
@@ -203,6 +215,15 @@ class _LoginState extends State<Login> {
                       ),
                     ],
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child:  SignInButton(
+                      Buttons.Google,
+                      onPressed: () {
+                        _showButtonPressDialog(context, 'Google');
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
@@ -229,4 +250,7 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
+
 }
+
