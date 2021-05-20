@@ -1,9 +1,13 @@
+import 'package:cs310_app/firebase/authentication_service.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/dimension.dart';
 import 'package:cs310_app/utils/styles.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../main.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -23,7 +27,16 @@ class _SignUpState extends State<SignUp> {
       'username': userName
     };
 
-    print(body);
+    await context.read<AuthenticationService>().signUp(
+      email: mail,
+      password: pass,
+
+    );
+    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
+    );
   }
 
   Future<void> showAlertDialog(String title, String message) async {

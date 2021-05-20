@@ -1,8 +1,11 @@
-
+import 'package:provider/provider.dart';
+import 'package:cs310_app/firebase/authentication_service.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../main.dart';
 
 class ProfileSettings extends StatefulWidget {
   @override
@@ -107,6 +110,27 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       borderRadius: BorderRadius.all(
                           Radius.circular(10.0))),
                   child: Text('Delete myAccount',
+                    style: TextStyle(fontSize: 14,
+                      color: Colors.black,
+                      letterSpacing: 2.2,
+                    ),
+                  ),
+                ),
+
+                RaisedButton(
+                  onPressed: () async {
+                    await context.read<AuthenticationService>().signOut();
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
+                    );
+
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(10.0))),
+                  child: Text('Sign Out',
                     style: TextStyle(fontSize: 14,
                       color: Colors.black,
                       letterSpacing: 2.2,
