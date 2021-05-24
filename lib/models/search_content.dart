@@ -1,13 +1,13 @@
-import 'package:cs310_app/objects/User.dart';
+import 'package:cs310_app/objects/Post.dart';
 import 'package:cs310_app/utils/grid_view.dart';
 import 'package:flutter/cupertino.dart';
 
-class SearchUser extends StatefulWidget {
+class SearchCont extends StatefulWidget {
   @override
-  _SearchUserState createState() => _SearchUserState();
+  _SearchContState createState() => _SearchContState();
 }
 
-class _SearchUserState extends State<SearchUser> {
+class _SearchContState extends State<SearchCont> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -16,15 +16,15 @@ class _SearchUserState extends State<SearchUser> {
         Expanded(
           flex: 1,
           child: GridView.builder(
-              itemCount: searchUser.length,
+              itemCount: searchContent.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
                 mainAxisSpacing: 0,
                 crossAxisSpacing: 0,
-                childAspectRatio: 4,
+                childAspectRatio: 0.75,
               ),
-              itemBuilder: (context, index) => UserCard(
-                user: searchUser[index],
+              itemBuilder: (context, index) => PostCard(
+                post: searchContent[index],
 
               )),
         ),

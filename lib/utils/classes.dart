@@ -1,4 +1,14 @@
+class User{
+  String name, surname, username;
+  String image;
+  bool active = true;
+  bool private = false;
 
+  List<String> topics = [];
+  List<String> locations = [];
+
+  User({this.name, this.surname, this.username,});
+}
 
 class Post {
   User sender;
@@ -12,16 +22,6 @@ class Post {
   Post({this.sender, this.image,});
 }
 
-class User{
-  String name, surname, username;
-  int followers, following, posts = 0;
-  String image;
-
-  List<Post> postList = [];
-
-  User({this.name, this.surname, this.username,});
-}
-
 class Comment {
   int likes;
   int dislike;
@@ -30,10 +30,6 @@ class Comment {
 
   Comment({this.comment,});
 }
-
-
-
-
 
 class Notif {
   String note;

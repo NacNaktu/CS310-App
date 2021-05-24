@@ -69,8 +69,9 @@ final underlinedStyle = TextStyle(
 );
 
 final ButtonStyle profilePageButtonStyle = TextButton.styleFrom(
-  primary: Colors.black87,
-  minimumSize: Size(100, 50),
+  primary: Colors.white70,
+  textStyle: mainTextStyle,
+  minimumSize: Size(110, 50),
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(10.0)),
   ),

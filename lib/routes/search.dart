@@ -1,4 +1,5 @@
 import 'package:cs310_app/models/bottomBar.dart';
+import 'package:cs310_app/models/search_content.dart';
 import 'package:cs310_app/models/search_loc.dart';
 import 'package:cs310_app/models/search_post.dart';
 import 'package:cs310_app/models/search_user.dart';
@@ -17,7 +18,7 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         bottomNavigationBar: BottomBar(index: 1),
         backgroundColor: AppColors.background,
@@ -54,6 +55,9 @@ class _SearchState extends State<Search> {
                 text: "Users",
               ),
               Tab(
+                text: "Content",
+              ),
+              Tab(
                 text: "Topics",
               ),
               Tab(
@@ -66,6 +70,7 @@ class _SearchState extends State<Search> {
         body: TabBarView(
           children: [
             SearchUser(),
+            SearchCont(),
             SearchPost(),
             SearchLoc(),
           ],

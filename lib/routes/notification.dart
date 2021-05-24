@@ -27,23 +27,17 @@ class _NotState extends State<Not> {
           children: [
             Expanded(
               flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
-                ),
-                child: GridView.builder(
-                    itemCount: nots.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      childAspectRatio: 4,
-                    ),
-                    itemBuilder: (context, index) => NotCard(
-                      notif: nots[index],
-                    )),
-              ),
+              child: GridView.builder(
+                  itemCount: nots.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    mainAxisSpacing: 0,
+                    crossAxisSpacing: 0,
+                    childAspectRatio: 5,
+                  ),
+                  itemBuilder: (context, index) => NotCard(
+                    notif: nots[index],
+                  )),
             ),
           ],
         ));
