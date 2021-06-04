@@ -18,14 +18,39 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   String mail, pass, pass2, name, userName;
+  String imageUrl = "";
   final _formKey = GlobalKey<FormState>();
 
-  Future<void> signUpUser() async {
+  void setImageUrl(String tempUrl){
+    this.imageUrl = tempUrl;
+  }
 
+
+  Future<void> signUpToFirebaseAuth() async {
     await context.read<AuthenticationService>().signUp(
       email: mail,
       password: pass,
     );
+
+  }
+
+  Future<void> signUpUser() async {
+    FirebaseFirestore.instance
+        .collection('misc')
+        .doc("usernameList")
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('Document exists on the database');
+        if(documentSnapshot["list"].contains(userName)){
+          print("username exists");
+        }
+        else{
+          signUpToFirebaseAuth();
+
+        }
+      }
+    });
 
 
     FirebaseAuth.instance.authStateChanges().listen((User user) {
@@ -43,7 +68,19 @@ class _SignUpState extends State<SignUp> {
           "posts": "0",
           "image": "string",
           "postList": "",
-          "email": mail
+          "email": mail,
+          "imageUrl":imageUrl,
+          "visible":true
+        });
+
+        DocumentReference postList = FirebaseFirestore.instance.collection('postList').doc(user.uid);
+        postList.set(
+            {"postList":[]}
+        );
+
+        DocumentReference usernameList = FirebaseFirestore.instance.collection('misc').doc("usernameList");
+        usernameList.update({
+          "list":FieldValue.arrayUnion([userName])
         });
       }
     });

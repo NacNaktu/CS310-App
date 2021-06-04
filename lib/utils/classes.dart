@@ -1,7 +1,7 @@
 import 'package:cs310_app/utils/variables.dart';
 
 class User{
-  String name, surname, username, info;
+  String name, surname, username, info, id;
   String image;
   bool active = true;
   bool private = false;
@@ -16,6 +16,7 @@ class User{
 
 class Post {
   User sender;
+  String description;
   String image = " ";
   //DateInputElement date;
   List<Comment> commentList = [];
@@ -23,7 +24,7 @@ class Post {
   List<String> dislikedUsers = [];
 
 
-  Post({this.sender, this.image,});
+  Post({this.sender, this.image, this.description});
 }
 class Comment {
   int likes;

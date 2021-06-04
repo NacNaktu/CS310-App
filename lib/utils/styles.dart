@@ -37,6 +37,13 @@ final bioTextStyle = TextStyle(
   letterSpacing: -0.7,
 );
 
+final postTextStyle = TextStyle(
+  color:  Colors.black,
+  fontSize: 16.0,
+  fontWeight: FontWeight.w500,
+  letterSpacing: -0.7,
+);
+
 final buttonStyle = OutlinedButton.styleFrom(
   backgroundColor: AppColors.primary,
 );
@@ -66,7 +73,7 @@ final errorStyle = TextStyle(
 );
 
 final underlinedStyle = TextStyle(
-    color: AppColors.textColor,
+    color: Colors.white,
     fontSize: 20,
     fontWeight: FontWeight.bold,
     height: 1.7,
@@ -74,6 +81,8 @@ final underlinedStyle = TextStyle(
     letterSpacing: 1.5
 
 );
+
+
 
 final ButtonStyle profilePageButtonStyle = TextButton.styleFrom(
   primary: Colors.white70,

@@ -52,6 +52,20 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
 
                 ),
+
+                RaisedButton(
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(10.0))),
+                  child: Text('Change Bio',
+                    style: TextStyle(fontSize: 14,
+                      color: Colors.black,
+                      letterSpacing: 2.2,
+                    ),
+                  ),
+                ),
+
                 RaisedButton(
                   onPressed: () {},
                   shape: RoundedRectangleBorder(

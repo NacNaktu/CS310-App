@@ -14,6 +14,7 @@ List<Post> feedPost = [
     ),
 
     image: "https://im0-tub-tr.yandex.net/i?id=f6f5e2ee81f7d4c4eecd02d738d31bad&n=13",
+      description: "dlashdlasjhdlkjaslkdjasljd"
   ),
 
   Post(
@@ -24,6 +25,7 @@ List<Post> feedPost = [
     ),
 
     image: "https://im0-tub-tr.yandex.net/i?id=f6f5e2ee81f7d4c4eecd02d738d31bad&n=13",
+      description: "dlashdlasjhdlkjaslkdjasljd"
   ),
 
 ];
@@ -56,6 +58,7 @@ List<Post> searchContent = [
     ),
 
     image: "https://im0-tub-tr.yandex.net/i?id=f6f5e2ee81f7d4c4eecd02d738d31bad&n=13",
+      description: "dlashdlasjhdlkjaslkdjasljd"
   ),
 
   Post(
@@ -66,6 +69,7 @@ List<Post> searchContent = [
     ),
 
     image: "https://im0-tub-tr.yandex.net/i?id=f6f5e2ee81f7d4c4eecd02d738d31bad&n=13",
+      description: "dlashdlasjhdlkjaslkdjasljd"
   ),
 
 ];
@@ -79,6 +83,7 @@ List<Post> searchTopic = [
     ),
 
     image: "https://im0-tub-tr.yandex.net/i?id=f6f5e2ee81f7d4c4eecd02d738d31bad&n=13",
+      description: "dlashdlasjhdlkjaslkdjasljd"
   ),
 
   Post(
@@ -89,6 +94,7 @@ List<Post> searchTopic = [
     ),
 
     image: "https://im0-tub-tr.yandex.net/i?id=f6f5e2ee81f7d4c4eecd02d738d31bad&n=13",
+      description: "dlashdlasjhdlkjaslkdjasljd"
   ),
 
 
@@ -103,6 +109,7 @@ List<Post> searchLoc = [
     ),
 
     image: "https://im0-tub-tr.yandex.net/i?id=f6f5e2ee81f7d4c4eecd02d738d31bad&n=13",
+      description: "dlashdlasjhdlkjaslkdjasljd"
   ),
 
   Post(
@@ -113,6 +120,7 @@ List<Post> searchLoc = [
     ),
 
     image: "https://im0-tub-tr.yandex.net/i?id=f6f5e2ee81f7d4c4eecd02d738d31bad&n=13",
+    description: "dlashdlasjhdlkjaslkdjasljd"
   ),
 
 

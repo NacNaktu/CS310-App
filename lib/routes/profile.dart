@@ -1,10 +1,14 @@
+
 import 'package:cs310_app/models/bottomBar.dart';
 import 'package:cs310_app/objects/Post.dart';
 import 'package:cs310_app/utils/classes.dart';
 import 'package:cs310_app/utils/color.dart';
-import 'package:cs310_app/utils/grid_view.dart';
 import 'package:cs310_app/utils/styles.dart';
+import 'package:cs310_app/utils/variables.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'dart:io';
 
 class Profile extends StatefulWidget {
   final User user;
@@ -16,6 +20,13 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  String imageUrl = "";
+
+  void setImageUrl(String tempUrl){
+    this.imageUrl = tempUrl;
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,29 +36,20 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       bottomNavigationBar: BottomBar(index: 2),
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(
-          'Profile',
-          style: appBarStyle,
-        ),
-        centerTitle: true,
-        backwardsCompatibility: false,
-        elevation: 0.0,
-        backgroundColor: AppColors.appBarColour,
-      ),
+
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backwardsCompatibility: false,
+            backwardsCompatibility: true,
             brightness: Brightness.dark,
             elevation: 0.0,
-            backgroundColor: AppColors.background,
+            backgroundColor: AppColors.appBarColour,
 
             floating: true,
             collapsedHeight: 208 + add,
 
             flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.all(8.0),
+              titlePadding: const EdgeInsets.fromLTRB(8, 30, 8, 8),
               centerTitle: false,
 
               title: Container(
@@ -62,10 +64,9 @@ class _ProfileState extends State<Profile> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Icon(
-                              Icons.account_circle,
-                              size: 100.0,
-                            ),
+                            CircleAvatar(backgroundImage: NetworkImage(im),
+                              radius: 50,),
+
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -160,5 +161,31 @@ class _ProfileState extends State<Profile> {
         ],
       ),
     );
+  }
+
+  Future<void> selectAndPickImage() async{
+
+    File _image;
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+
+    if (pickedFile != null) {
+      _image = File(pickedFile.path,);
+      uploadToStorage(_image);
+    } else {
+      print('No image selected.');
+    }
+  }
+
+  uploadToStorage(File image) async{
+    String imageName = DateTime.now().millisecondsSinceEpoch.toString();
+    firebase_storage.Reference reference =   firebase_storage.FirebaseStorage.instance.ref().child(imageName);
+    firebase_storage.UploadTask uploadTask = reference.putFile(image);
+    firebase_storage.TaskSnapshot taskSnapshot =  await uploadTask;
+    await taskSnapshot.ref.getDownloadURL().then((url){
+      setImageUrl(url);
+    });
+
   }
 }

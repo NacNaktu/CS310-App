@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         navigatorObservers: [locator<AnalyticsService>().getAnalyticsObserver()],
 
 

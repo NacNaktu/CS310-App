@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_app/firebase/authentication_service.dart';
 import 'package:cs310_app/utils/color.dart';
-import 'package:cs310_app/utils/dimension.dart';
+import 'package:cs310_app/utils/classes.dart' as classes;
 import 'package:cs310_app/utils/styles.dart';
+import 'package:cs310_app/utils/variables.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +19,33 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   String mail, pass;
+  String name, surname, username, info;
+  bool private = false;
+  String userId;
 
 
 
   final _formKey = GlobalKey<FormState>();
+
+  void getUser() async {
+
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('Document exists on the database');
+        LoggedUser  = classes.User(name: documentSnapshot["name"], surname: documentSnapshot["surname"],username: documentSnapshot["username"]);
+
+        LoggedUser.image = documentSnapshot["imageUrl"];
+        LoggedUser.id = userId;
+
+        print(LoggedUser.name+ " " + LoggedUser.image);
+      }
+    });
+  }
 
   Future<void> showAlertDialog(String title, String message) async {
     return showDialog<void>(
@@ -62,9 +86,10 @@ class _LoginState extends State<Login> {
         .authStateChanges()
         .listen((User user) {
       if (user == null) {
-        print('User is currently signed out!');
+
       } else {
-        DocumentReference currentUser = FirebaseFirestore.instance.collection('users').doc(user.uid);
+        userId = user.uid;
+        getUser();
 
       }
     });

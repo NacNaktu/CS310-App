@@ -1,3 +1,4 @@
+import 'package:cs310_app/utils/color.dart';
 import 'package:flutter/material.dart';
 
 
@@ -38,6 +39,9 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      selectedItemColor: AppColors.primary,
+      unselectedItemColor: Colors.white70,
+      type: BottomNavigationBarType.fixed,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
@@ -58,12 +62,12 @@ class _BottomBarState extends State<BottomBar> {
 
       ],
       iconSize: 20,
-      backgroundColor: Colors.black,
-      unselectedItemColor: Colors.black,
+      backgroundColor: AppColors.background,
+
       showUnselectedLabels: true,
       onTap: (index) => onTap(index),
         currentIndex: index,
-        selectedItemColor: Colors.blue,
+
 
     );
   }

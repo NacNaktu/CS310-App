@@ -3,6 +3,7 @@
 import 'package:cs310_app/routes/profile.dart';
 import 'package:cs310_app/utils/classes.dart';
 import 'package:cs310_app/utils/color.dart';
+import 'package:cs310_app/utils/styles.dart';
 import 'package:cs310_app/utils/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -64,6 +65,17 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
             ),
+            SizedBox(height: 14.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  widget.post.description,
+                  style: postTextStyle ,
+                ),
+              ],
+            ),
+
             SizedBox(height: 14.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

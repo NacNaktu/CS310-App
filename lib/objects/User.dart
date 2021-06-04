@@ -1,6 +1,7 @@
 import 'package:cs310_app/routes/profile.dart';
 import 'package:cs310_app/utils/classes.dart';
 import 'package:cs310_app/utils/color.dart';
+import 'package:cs310_app/utils/variables.dart';
 import 'package:flutter/material.dart';
 
 class UserCard extends StatefulWidget {
@@ -33,7 +34,8 @@ class _UserCardState extends State<UserCard> {
           child: Column(
             children: [
               ListTile(
-                leading: CircleAvatar(),
+                leading: CircleAvatar(backgroundImage: NetworkImage(im),
+                  radius: 50,),
                 title: Text(widget.user.name + " " + widget.user.surname),
                 subtitle: Text(widget.user.username),
               ),
