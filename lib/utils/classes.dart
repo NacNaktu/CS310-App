@@ -1,10 +1,13 @@
+import 'package:cs310_app/utils/variables.dart';
+
 class User{
-  String name, surname, username;
+  String name, surname, username, info;
   String image;
   bool active = true;
   bool private = false;
 
-  List<String> topics = [];
+  List<Post> bookmarked = [];
+  List<Post> shared = [];
   List<String> locations = [];
   List<User> connections = [];
 
@@ -13,13 +16,11 @@ class User{
 
 class Post {
   User sender;
-  int likes = 0;
-  int dislike = 0;
-  int commentNum = 0;
   String image = " ";
   //DateInputElement date;
   List<Comment> commentList = [];
   List<String> likedUsers = [];
+  List<String> dislikedUsers = [];
 
 
   Post({this.sender, this.image,});
@@ -37,6 +38,8 @@ class Notif {
   String note;
   String date;
   User user;
+  bool sendToUser = true;
+  User sender = LoggedUser;
 
   Notif({this.note, this.date});
 }

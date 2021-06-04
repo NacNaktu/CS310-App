@@ -11,138 +11,154 @@ class Profile extends StatefulWidget {
 
   const Profile({Key key, this.user}) : super(key: key);
 
-
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
 
-
   @override
   Widget build(BuildContext context) {
+    double add;
+
+    add = widget.user.info != null ? 50 : 0;
     return Scaffold(
       bottomNavigationBar: BottomBar(index: 2),
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backwardsCompatibility: false,
         title: Text(
           'Profile',
           style: appBarStyle,
         ),
-        backgroundColor: AppColors.appBarColour,
         centerTitle: true,
+        backwardsCompatibility: false,
         elevation: 0.0,
+        backgroundColor: AppColors.appBarColour,
       ),
-      body: Column(
-      //shrinkWrap: true,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backwardsCompatibility: false,
+            brightness: Brightness.dark,
+            elevation: 0.0,
+            backgroundColor: AppColors.background,
 
-      children: [
-        Container(
-          height: 140,
-          padding: EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Icon(
-                    Icons.account_circle,
-                    size: 100.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                    child: Column(
+            floating: true,
+            collapsedHeight: 208 + add,
+
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: const EdgeInsets.all(8.0),
+              centerTitle: false,
+
+              title: Container(
+                width: MediaQuery.of(context).size.width - 16,
+
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          widget.user.name + " "+ widget.user.surname,
-                          style: underlinedStyle,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Icon(
+                              Icons.account_circle,
+                              size: 100.0,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  widget.user.name + " " + widget.user.surname,
+                                  style: underlinedStyle,
+                                ),
+                                Text(
+                                  widget.user.username,
+                                  style: underlinedStyle,
+                                )
+                              ],
+                            ),
+                          ],
                         ),
-                        Text(
-                          widget.user.username,
-                          style: underlinedStyle,
-                        )
+                        IconButton(
+                          splashRadius: 20,
+                          icon: Icon(
+                            Icons.settings,
+                            size: 20.0,
+
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              "/psettings",
+                            );
+                          },
+                        ),
+
+
                       ],
                     ),
-                  ),
-                ],
+
+                    Container(
+                      height: widget.user.info != null? 50:0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          widget.user.info != null ? widget.user.info : "",
+                          style: bioTextStyle,
+                        ),
+                      ),
+                    ),
+
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: OutlinedButton(
+                                    style: profilePageButtonStyle,
+                                    onPressed: () {
+                                      //TODO connect this to Topics
+                                    },
+                                    child: Text("Topics")),
+                              )),
+                          Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: OutlinedButton(
+                                    style: profilePageButtonStyle,
+                                    onPressed: () {
+                                      //TODO connect this to connections
+                                    },
+                                    child: Text("Connections")),
+                              )),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              IconButton(
-                icon: Icon(
-                  Icons.settings,
-                  size: 40.0,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    "/psettings",
-                  );
-                },
-              )
-            ],
+            ),
           ),
-        ),
-        Container(
-          padding: EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: OutlinedButton(
-                        style: profilePageButtonStyle,
-                        onPressed: () {
-                          //TODO connect this to Info
-                        },
-                        child: Text("Info")),
-                  )),
-              Expanded(
-
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: OutlinedButton(
-                        style: profilePageButtonStyle,
-                        onPressed: (){
-                          //TODO connect this to Topics
-                        },
-                        child: Text("Topics")),
-                  )),
-              Expanded(
-
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: OutlinedButton(
-                        style: profilePageButtonStyle,
-                        onPressed: (){
-                          //TODO connect this to connections
-                        },
-                        child: Text("Connections")),
-                  )),
-            ],
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Container(
+                  height: 500,
+                  child: PostCard(
+                    post: widget.user.shared[index],
+                  ),
+                );
+              },
+              childCount: widget.user.shared.length,
+            ),
           ),
-        ),
-        Expanded(
-
-          child: GridView.builder(
-                itemCount: feedPost.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                  mainAxisSpacing: 0,
-                  crossAxisSpacing: 0,
-                  childAspectRatio: 0.75,
-                ),
-                itemBuilder: (context, index) => PostCard(
-                      post: feedPost[index],
-                    )),
-
-        ),
-      ],
-        ),
+        ],
+      ),
     );
   }
 }

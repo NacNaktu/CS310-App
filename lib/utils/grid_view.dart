@@ -121,14 +121,14 @@ List<Post> searchLoc = [
 //Notifications Page
 
 List<Notif> nots = [
-  Notif(note: 'Elon Musk liked your post', date: '8 May'),
-  Notif(note: 'Rihanna followed you', date: '7 May'),
-  Notif(note: 'Dua Lipa followed you', date: '7 May'),
-  Notif(note: 'Dua Lipa liked your post', date: '7 May'),
-  Notif(note: 'Keanu Reeves followed you', date: '6 May'),
-  Notif(note: 'Jared Leto followed you', date: '6 May'),
-  Notif(note: 'Johnny Depp liked your post', date: '6 May'),
-  Notif(note: 'Kylie Jenner commented your post', date: '5 May'),
+  Notif(note: ' liked your post', date: '8 May'),
+  Notif(note: ' followed you', date: '7 May'),
+  Notif(note: ' followed you', date: '7 May'),
+  Notif(note: ' liked your post', date: '7 May'),
+  Notif(note: ' followed you', date: '6 May'),
+  Notif(note: ' followed you', date: '6 May'),
+  Notif(note: ' liked your post', date: '6 May'),
+  Notif(note: ' commented your post', date: '5 May'),
 
 ];
 

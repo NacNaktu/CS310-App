@@ -30,6 +30,13 @@ final secondaryTextStyle = TextStyle(
   letterSpacing: -0.7,
 );
 
+final bioTextStyle = TextStyle(
+  color:  AppColors.textColor,
+  fontSize: 16.0,
+  fontWeight: FontWeight.w500,
+  letterSpacing: -0.7,
+);
+
 final buttonStyle = OutlinedButton.styleFrom(
   backgroundColor: AppColors.primary,
 );

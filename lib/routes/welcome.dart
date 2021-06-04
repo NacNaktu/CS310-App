@@ -7,6 +7,7 @@ import 'package:cs310_app/routes/login.dart';
 
 
 
+
 class Welcome extends StatefulWidget {
   @override
   _WelcomeState createState() => _WelcomeState();
@@ -14,6 +15,7 @@ class Welcome extends StatefulWidget {
 
 
 class _WelcomeState extends State<Welcome> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,6 +138,7 @@ class _WelcomeState extends State<Welcome> {
                     ),
                   ),
                 ),
+
               ],
             ),
           ),
@@ -143,4 +146,6 @@ class _WelcomeState extends State<Welcome> {
       ),
     );
   }
+
+
 }

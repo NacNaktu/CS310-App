@@ -1,5 +1,5 @@
 import 'package:cs310_app/models/bottomBar.dart';
-import 'package:cs310_app/models/notification_card.dart';
+import 'package:cs310_app/objects/Notif.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/grid_view.dart';
 import 'package:flutter/material.dart';

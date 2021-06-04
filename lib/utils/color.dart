@@ -8,5 +8,6 @@ class AppColors {
   static const Color headingColor = const Color(0xFF0277BD);
   static const Color textColor = Colors.lightGreen;
   static const Color errorColor = Colors.white;
+  static const Color cardColor = const Color(0xD8CCEEF5);
 
 }

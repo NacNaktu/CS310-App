@@ -1,5 +1,6 @@
 import 'package:cs310_app/routes/profile.dart';
 import 'package:cs310_app/utils/classes.dart';
+import 'package:cs310_app/utils/color.dart';
 import 'package:flutter/material.dart';
 
 class UserCard extends StatefulWidget {
@@ -25,6 +26,7 @@ class _UserCardState extends State<UserCard> {
         );
       },
       child: Card(
+        color: AppColors.cardColor,
         child: Container(
           width:  MediaQuery. of(context). size. width,
           height: 70,
