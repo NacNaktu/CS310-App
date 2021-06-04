@@ -6,6 +6,7 @@ class User{
 
   List<String> topics = [];
   List<String> locations = [];
+  List<User> connections = [];
 
   User({this.name, this.surname, this.username,});
 }
@@ -18,10 +19,11 @@ class Post {
   String image = " ";
   //DateInputElement date;
   List<Comment> commentList = [];
+  List<String> likedUsers = [];
+
 
   Post({this.sender, this.image,});
 }
-
 class Comment {
   int likes;
   int dislike;
@@ -34,7 +36,7 @@ class Comment {
 class Notif {
   String note;
   String date;
-  User reason;
+  User user;
 
   Notif({this.note, this.date});
 }

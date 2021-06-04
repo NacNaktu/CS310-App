@@ -17,13 +17,12 @@ class NotCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text(
-              notif.note,
-            ),
-            SizedBox(height: 6.0),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+                Text(
+                  notif.note,
+                ),
                 Text(
                   notif.date,
                 ),

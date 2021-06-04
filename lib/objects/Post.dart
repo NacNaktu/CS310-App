@@ -1,11 +1,10 @@
 
 
 import 'package:cs310_app/utils/classes.dart';
+import 'package:cs310_app/utils/variables.dart';
 import 'package:flutter/material.dart';
 
-
-class PostCard extends StatelessWidget {
-
+class PostCard extends StatefulWidget {
   final Post post;
 
   const PostCard({
@@ -14,8 +13,13 @@ class PostCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _PostCardState createState() => _PostCardState();
+}
+
+class _PostCardState extends State<PostCard> {
+  @override
   Widget build(BuildContext context) {
-    return Card(
+    return  Card(
 
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -23,39 +27,19 @@ class PostCard extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: CircleAvatar(),
-              title: Text( post.sender.name + post.sender.surname),
-              subtitle: Text(post.sender.username),
+              title: Text( widget.post.sender.name + widget.post.sender.surname),
+              subtitle: Text(widget.post.sender.username),
             ),
             Expanded(
               flex:1,
               child: Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(post.image),
+                      image: NetworkImage(widget.post.image),
                       fit: BoxFit.cover,
                     )
                 ),
               ),
-            ),
-            SizedBox(height: 14.0),
-            Column(
-              children: [
-                Row(
-                  children: <Widget>[
-                    Text("berkinkaracam", style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 4.0,),
-                    Text("This is Rize, Çamlıhemşin."),
-                  ],
-                ),
-                SizedBox(height: 4.0,),
-                Row(
-                  children: <Widget>[
-                    Text("yunusyasar", style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 4.0,),
-                    Text("Nice"),
-                  ],
-                ),
-              ],
             ),
             SizedBox(height: 14.0),
             Row(
@@ -63,10 +47,21 @@ class PostCard extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    IconButton(icon: Icon(Icons.thumb_up, color: Colors.grey,)),
+                    IconButton(icon: Icon(Icons.thumb_up, color: Colors.green,),
+                    onPressed: (){
+                      //Todo change likes in database
+                      setState((){
+                        if(widget.post.likedUsers.contains(LoggedUser.username)) {
+                          widget.post.likes --;
+                        }else {
+                          widget.post.likes ++;
+                        };
+
+                      });
+                    },),
                     SizedBox(height: 8.0),
                     Text(
-                      "${post.likes}",
+                      "${widget.post.likes}",
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
@@ -77,7 +72,7 @@ class PostCard extends StatelessWidget {
                       icon: Icon(Icons.thumb_down, color: Colors.grey,),),
                     SizedBox(height: 8.0),
                     Text(
-                      "${post.dislike}",
+                      "${widget.post.dislike}",
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
@@ -87,7 +82,7 @@ class PostCard extends StatelessWidget {
                     IconButton(icon: Icon(Icons.comment, color: Colors.grey,)),
                     SizedBox(height: 8.0),
                     Text(
-                      "${post.commentNum}",
+                      "${widget.post.commentNum}",
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],

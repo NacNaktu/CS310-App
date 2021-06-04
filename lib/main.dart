@@ -9,6 +9,7 @@ import 'package:cs310_app/routes/search.dart';
 import 'package:cs310_app/routes/signup.dart';
 import 'package:cs310_app/routes/walkthrough.dart';
 import 'package:cs310_app/routes/welcome.dart';
+import 'package:cs310_app/utils/variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
           '/signup': (context) => SignUp(),
           '/search': (context) => Search(),
           '/notification' : (context) => Not(),
-          '/profile' : (context) => Profile(),
+          '/profile' : (context) => Profile(user: LoggedUser),
           '/feed' : (context) => Feed(),
           '/psettings' : (context) => ProfileSettings(),
 
