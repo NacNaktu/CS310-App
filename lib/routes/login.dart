@@ -1,13 +1,8 @@
-import 'package:cs310_app/firebase/authentication_service.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/dimension.dart';
 import 'package:cs310_app/utils/styles.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-
-import '../main.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -16,8 +11,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   String mail, pass;
-
-
 
   final _formKey = GlobalKey<FormState>();
 
@@ -54,15 +47,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    void _showButtonPressDialog(BuildContext context, String provider) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('$provider Button Pressed!'),
-        backgroundColor: Colors.black26,
-        duration: Duration(milliseconds: 400),
-      ));}
-
     return Scaffold(
       backgroundColor: AppColors.background,
 
@@ -185,19 +169,9 @@ class _LoginState extends State<Login> {
                       Expanded(
                         flex: 1,
                         child: OutlinedButton(
-                            onPressed: () async {
+                            onPressed: () {
                               if (_formKey.currentState.validate()) {
                                 _formKey.currentState.save();
-                                await context.read<AuthenticationService>().signIn(
-                                  email: mail,
-                                  password: pass,
-
-                                );
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
-                                );
 
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(content: Text('Logging in')));
@@ -215,15 +189,6 @@ class _LoginState extends State<Login> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child:  SignInButton(
-                      Buttons.Google,
-                      onPressed: () {
-                        _showButtonPressDialog(context, 'Google');
-                      },
-                    ),
-                  )
                 ],
               ),
             ),
@@ -250,7 +215,4 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
-
 }
-
