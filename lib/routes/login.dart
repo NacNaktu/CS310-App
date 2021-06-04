@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_app/firebase/authentication_service.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/dimension.dart';
 import 'package:cs310_app/utils/styles.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -56,12 +58,17 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
 
 
-    void _showButtonPressDialog(BuildContext context, String provider) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('$provider Button Pressed!'),
-        backgroundColor: Colors.black26,
-        duration: Duration(milliseconds: 400),
-      ));}
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((User user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        DocumentReference currentUser = FirebaseFirestore.instance.collection('users').doc(user.uid);
+
+      }
+    });
+
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -219,9 +226,7 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.all(16.0),
                     child:  SignInButton(
                       Buttons.Google,
-                      onPressed: () {
-                        _showButtonPressDialog(context, 'Google');
-                      },
+                      onPressed: () {},
                     ),
                   )
                 ],

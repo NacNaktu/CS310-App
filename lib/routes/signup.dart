@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_app/firebase/authentication_service.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/dimension.dart';
 import 'package:cs310_app/utils/styles.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,19 +21,34 @@ class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
 
   Future<void> signUpUser() async {
-    var body = {
-      'call': 'signup',
-      'mail': mail,
-      'pass': pass,
-      "name": name,
-      'username': userName
-    };
 
     await context.read<AuthenticationService>().signUp(
       email: mail,
       password: pass,
-
     );
+
+
+    FirebaseAuth.instance.authStateChanges().listen((User user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        DocumentReference users =
+        FirebaseFirestore.instance.collection('users').doc(user.uid);
+        users.set({
+          'name': name,
+          'surname': "surname",
+          'username': userName,
+          "follower": "0",
+          "following": "0",
+          "posts": "0",
+          "image": "string",
+          "postList": "",
+          "email": mail
+        });
+      }
+    });
+
+
     Navigator.pop(context);
     Navigator.push(
       context,
