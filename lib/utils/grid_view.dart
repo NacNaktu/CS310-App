@@ -33,17 +33,6 @@ List<Post> feedPost = [
 //Search Page
 
 List<User> searchUser = [
-  User(
-    name: "Can Utkan",
-    surname: "KARAHAN",
-    username: "@ukarahan"
-  ),
-
-  User(
-      name: "Yunus",
-      surname: "YASAR",
-      username: "@yunusy"
-  ),
 
 
 

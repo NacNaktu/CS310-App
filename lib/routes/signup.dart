@@ -54,7 +54,7 @@ class _SignUpState extends State<SignUp> {
         print('User is currently signed out!');
       } else {
         DocumentReference users =
-            FirebaseFirestore.instance.collection('users').doc();
+            FirebaseFirestore.instance.collection('users').doc(user.uid);
         users.set({
           'name': name,
           'surname': "surname",

@@ -94,7 +94,7 @@ class _ProfileState extends State<Profile> {
 
                             GestureDetector(
                               onTap: () {_openPopup(context);},
-                              child: CircleAvatar(backgroundImage: NetworkImage(LoggedUser.image),
+                              child: CircleAvatar(backgroundImage: NetworkImage(im),
                                 radius: 50,),
                             ),
 

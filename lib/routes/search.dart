@@ -1,3 +1,6 @@
+
+
+import 'package:cs310_app/firebase/firestoreService.dart';
 import 'package:cs310_app/models/bottomBar.dart';
 import 'package:cs310_app/models/search_content.dart';
 import 'package:cs310_app/models/search_loc.dart';
@@ -5,18 +8,38 @@ import 'package:cs310_app/models/search_post.dart';
 import 'package:cs310_app/models/search_user.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Search extends StatefulWidget {
   @override
   _SearchState createState() => _SearchState();
 }
 
+
+
+
 class _SearchState extends State<Search> {
   String search;
+
+  Future<void> loadUsers() async {
+    await context.read<FirestoreServicee>().getAllUser();
+    await Future.delayed(Duration(milliseconds: 100000));
+  }
+
+  @protected
+  @mustCallSuper
+  // ignore: must_call_super
+  void initState()  {
+    loadUsers();
+  }
 
 
   @override
   Widget build(BuildContext context) {
+    loadUsers();
+
+
+
     return DefaultTabController(
       length: 4,
       child: Scaffold(

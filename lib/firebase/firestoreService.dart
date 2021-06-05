@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cs310_app/utils/classes.dart' as classes;
+import 'package:cs310_app/utils/grid_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart';
 
@@ -23,6 +25,24 @@ class FirestoreServicee {
     return temp;
   }
 
+  Future<void> getAllUser() async {
+    List<classes.User> tempList = [];
+    print("icerde");
+    print("**********************");
+
+    await _firestore.collection("users").get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        classes.User tempUser = classes.User(username: doc["username"],surname: doc["surname"],name: doc["name"]);
+        tempUser.id = doc.id;
+        tempList.add(tempUser);
+
+      });
+    });
+
+    searchUser = tempList;
+    await Future.delayed(Duration(milliseconds: 200));
+  }
+
   void deactivateUser(String userId) async {
     await _firestore
         .collection('users')
@@ -34,7 +54,7 @@ class FirestoreServicee {
     await _firestore.collection('users').doc(userId).delete();
   }
 
-  Future<bool>  getActiveStatus (String userId) async {
+  Future<bool> getActiveStatus(String userId) async {
     bool temp;
     await _firestore
         .collection('users')
@@ -49,7 +69,6 @@ class FirestoreServicee {
     });
     print(temp);
     return temp;
-
   }
 
   Future<bool> updateUserField(
@@ -59,8 +78,6 @@ class FirestoreServicee {
         .doc(userId)
         .set({fieldName: newValue}, SetOptions(merge: true));
   }
-
-
 
   Future<bool> getVisible(String userId) async {
     bool temp;
@@ -84,8 +101,6 @@ class FirestoreServicee {
         .collection('users')
         .doc(userId)
         .set({"visible": value}, SetOptions(merge: true));
-
-
   }
 
   Future<void> changePicture(String userId, String url) async {
