@@ -66,7 +66,6 @@ class _SignUpState extends State<SignUp> {
           "follower": "0",
           "following": "0",
           "posts": "0",
-          "image": "string",
           "postList": "",
           "email": mail,
           "imageUrl":imageUrl,
@@ -144,12 +143,22 @@ class _SignUpState extends State<SignUp> {
                 children: [
                   Row(
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: Icon(
+                          Icons.alternate_email,
+                          color: Colors.white,
+                        ),
+                      ),
                       Expanded(
                         flex: 1,
                         child: TextFormField(
+                          style: hintTextStyle,
                           decoration: InputDecoration(
-
+                            fillColor: AppColors.secondary,
+                            filled: false,
                             hintText: 'E-mail',
+                            hintStyle: hintTextStyle,
                             labelStyle: labelStyle,
                             errorStyle: errorStyle,
                           ),
@@ -175,12 +184,20 @@ class _SignUpState extends State<SignUp> {
                   ),
                   Row(
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: Icon(
+                          Icons.drive_file_rename_outline,
+                          color: Colors.white,
+                        ),
+                      ),
                       Expanded(
                         flex: 1,
                         child: TextFormField(
                           decoration: InputDecoration(
 
                             hintText: 'Name',
+                            hintStyle: hintTextStyle,
                             labelStyle: labelStyle,
                             errorStyle: errorStyle,
                           ),
@@ -203,12 +220,20 @@ class _SignUpState extends State<SignUp> {
                   ),
                   Row(
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: Icon(
+                          Icons.drive_file_rename_outline,
+                          color: Colors.white,
+                        ),
+                      ),
                       Expanded(
                         flex: 1,
                         child: TextFormField(
                           decoration: InputDecoration(
 
                             hintText: 'Username',
+                            hintStyle: hintTextStyle,
                             labelStyle: labelStyle,
                             errorStyle: errorStyle,
                           ),
@@ -234,12 +259,20 @@ class _SignUpState extends State<SignUp> {
                   ),
                   Row(
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: Icon(
+                          Icons.lock,
+                          color: Colors.white,
+                        ),
+                      ),
                       Expanded(
                         flex: 1,
                         child: TextFormField(
                           decoration: InputDecoration(
 
                             hintText: 'Password',
+                            hintStyle: hintTextStyle,
                             labelStyle: labelStyle,
                             errorStyle: errorStyle,
                           ),
@@ -268,6 +301,7 @@ class _SignUpState extends State<SignUp> {
                           decoration: InputDecoration(
 
                             hintText: 'Password (Repeat)',
+                            hintStyle: hintTextStyle,
                             labelStyle: labelStyle,
                             errorStyle: errorStyle,
                           ),

@@ -97,24 +97,9 @@ class _LoginState extends State<Login> {
       backgroundColor: AppColors.background,
 
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            flex: 3,
-            child: Container(
 
-              height: MediaQuery. of(context). size. height * 2/3,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image:NetworkImage("https://previews.123rf.com/images/aimage/aimage1505/aimage150500095/40260204-social-network-vector-background-friends-family-and-colleagues-communicating-via-social-networking-b.jpg"),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.vertical(
-                    bottom: Radius.elliptical(200.0, 80.0)
-                ),
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(left: 16.0,top: 80.0, right: 16.0, bottom: 16.0),
             child: Form(

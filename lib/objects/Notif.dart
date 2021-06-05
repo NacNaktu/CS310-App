@@ -22,7 +22,7 @@ class _NotCardState extends State<NotCard> {
           //TODO delete the notification
           nots.remove(widget.notif);
 
-        Navigator.pop(context);
+
         Navigator.push(
           context,
           MaterialPageRoute(
