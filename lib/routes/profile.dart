@@ -1,14 +1,20 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cs310_app/firebase/firestoreService.dart';
+import 'package:cs310_app/firebase/post_service.dart';
 import 'package:cs310_app/models/bottomBar.dart';
 import 'package:cs310_app/objects/Post.dart';
 import 'package:cs310_app/utils/classes.dart';
 import 'package:cs310_app/utils/color.dart';
+import 'package:provider/provider.dart';
 import 'package:cs310_app/utils/styles.dart';
 import 'package:cs310_app/utils/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'dart:io';
+
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Profile extends StatefulWidget {
   final User user;
@@ -21,15 +27,35 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   String imageUrl = "";
+  File image;
+  FirestoreServicee _service;
 
   void setImageUrl(String tempUrl){
     this.imageUrl = tempUrl;
   }
 
 
+  Future<void> loadPosts() async {
+    await context.read<PostService>().getAllUserPostsId(LoggedUser.id);
+    await Future.delayed(Duration(milliseconds: 100000));
+  }
+
+
+  @protected
+  @mustCallSuper
+  // ignore: must_call_super
+  void initState()  {
+    loadPosts();
+  }
+
+
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
+    loadPosts();
+
+
+
     double add;
 
     add = widget.user.info != null ? 50 : 0;
@@ -64,8 +90,12 @@ class _ProfileState extends State<Profile> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            CircleAvatar(backgroundImage: NetworkImage(im),
-                              radius: 50,),
+
+                            GestureDetector(
+                              onTap: () {_openPopup(context);},
+                              child: CircleAvatar(backgroundImage: NetworkImage(im),
+                                radius: 50,),
+                            ),
 
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +193,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Future<void> selectAndPickImage() async{
+  Future<File> selectAndPickImage() async{
 
     File _image;
     final picker = ImagePicker();
@@ -172,10 +202,10 @@ class _ProfileState extends State<Profile> {
 
     if (pickedFile != null) {
       _image = File(pickedFile.path,);
-      uploadToStorage(_image);
     } else {
       print('No image selected.');
     }
+    return _image;
   }
 
   uploadToStorage(File image) async{
@@ -185,7 +215,49 @@ class _ProfileState extends State<Profile> {
     firebase_storage.TaskSnapshot taskSnapshot =  await uploadTask;
     await taskSnapshot.ref.getDownloadURL().then((url){
       setImageUrl(url);
+      context.read<FirestoreServicee>().changePicture("seUiDJ9iPVhtf0b7f0D7qIzpZEc2",url);
     });
 
+
+
+
+    
+    //Todo resim ekleme eklenicek
+  }
+
+
+  _openPopup(context) {
+    Alert(
+        context: context,
+        title: "Change Picture",
+        content: Column(
+          children: <Widget>[
+            InkWell(
+              onTap: () async{
+                image = await selectAndPickImage();
+                
+
+              },
+              child: Image.network(im)
+            ),
+
+          ],
+        ),
+        buttons: [
+          DialogButton(
+            onPressed: () {
+              uploadToStorage(image);
+
+
+
+              Navigator.pop(context);
+              Navigator.pushNamed(context, "/profile");
+            },
+            child: Text(
+              "Change",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          ),
+        ]).show();
   }
 }
