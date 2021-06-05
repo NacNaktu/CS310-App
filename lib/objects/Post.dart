@@ -88,6 +88,7 @@ class _PostCardState extends State<PostCard> {
                       setState((){
                         if(widget.post.likedUsers.contains(LoggedUser.username)) {
                           widget.post.likedUsers.remove(LoggedUser.username);
+
                         }else {
 
                           widget.post.likedUsers.add(LoggedUser.username);

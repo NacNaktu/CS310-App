@@ -16,12 +16,10 @@ class FirestoreServicee {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         temp = documentSnapshot[fieldName];
-        print(temp);
       } else {
         print("user does not exist");
       }
     });
-    print(temp);
     return temp;
   }
 
@@ -60,5 +58,40 @@ class FirestoreServicee {
         .collection('users')
         .doc(userId)
         .set({fieldName: newValue}, SetOptions(merge: true));
+  }
+
+
+
+  Future<bool> getVisible(String userId) async {
+    bool temp;
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        temp = documentSnapshot["visible"];
+      } else {
+        print("user does not exist");
+      }
+    });
+    return temp;
+  }
+
+  Future<bool> changeVisible(String userId, bool value) async {
+    bool temp;
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .set({"visible": value}, SetOptions(merge: true));
+
+
+  }
+
+  Future<void> changePicture(String userId, String url) async {
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .set({"imageUrl": url}, SetOptions(merge: true));
   }
 }

@@ -16,13 +16,42 @@ class ProfileSettings extends StatefulWidget {
   _ProfileSettingsState createState() => _ProfileSettingsState();
 }
 
+
+
 class _ProfileSettingsState extends State<ProfileSettings> {
+
+
+  @protected
+  @mustCallSuper
+  void initState() {
+    changeVisible();
+
+  }
+
   bool _visible = false;
+
   String value;
+
   final _formKey = GlobalKey<FormState>();
+
+
+
+  void changeVisible() async {
+    final temp = await context.read<FirestoreServicee>().getVisible("seUiDJ9iPVhtf0b7f0D7qIzpZEc2");
+    _visible = temp;
+  }
+
+
+
 
   @override
   Widget build(BuildContext context)  {
+    changeVisible();
+
+
+
+
+
     return Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
@@ -103,18 +132,17 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                         style: mainTextStyle,),
 
                       trailing: CupertinoSwitch(
+                        //TODO id degistirilecek
                         value: _visible,
-                        onChanged: (bool value) {
+                        onChanged: (bool value) async {
+                          //TODO id degisecek
+                          print("change");
+                          await context.read<FirestoreServicee>().changeVisible("seUiDJ9iPVhtf0b7f0D7qIzpZEc2",value);
                           setState(() {
                             _visible = value;
                           });
                         },
                       ),
-                      onTap: () {
-                        setState(() {
-                          _visible = !_visible;
-                        });
-                      },
                     ),
                   ),
                 ),

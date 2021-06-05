@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cs310_app/firebase/post_service.dart';
 import 'package:cs310_app/models/bottomBar.dart';
 import 'package:cs310_app/objects/Post.dart';
 import 'package:cs310_app/utils/color.dart';
@@ -6,6 +7,7 @@ import 'package:cs310_app/utils/grid_view.dart';
 import 'package:cs310_app/utils/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'dart:io';
@@ -34,6 +36,8 @@ class _FeedState extends State<Feed> {
 
   }
 
+
+
   Future<void> savePost() async {
     await uploadToStorage(tempFile);
     String post1Id = DateTime
@@ -43,16 +47,16 @@ class _FeedState extends State<Feed> {
     DocumentReference post1 = FirebaseFirestore.instance.collection('post').doc(
         post1Id);
     post1.set({
-      "userId": LoggedUser.id,
+      //TODO id degisecek
+      "userId": "XC02fBoVBGaCy3WXXwpyucLSPe82",
       "description": description,
       "imageUrl": imageUrl,
-      "date": DateTime.now(),
+      "date": DateTime.now().toString() + "aaaa",
       "likedUsers": [],
       "commentList": []
     });
-    DocumentReference postList = FirebaseFirestore.instance.collection('postList').doc(LoggedUser.id);
-
-
+    //TODO id degisecek
+    DocumentReference postList = FirebaseFirestore.instance.collection('postList').doc("XC02fBoVBGaCy3WXXwpyucLSPe82");
     postList.update({
       "postList": FieldValue.arrayUnion([post1Id])
     });
@@ -66,8 +70,11 @@ class _FeedState extends State<Feed> {
 
   }
 
+
   @override
   Widget build(BuildContext context) {
+
+
     return  Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -108,9 +115,9 @@ class _FeedState extends State<Feed> {
     );
   }
 
-  _openPopup(context) {
+  _openPopup(context1) {
     Alert(
-        context: context,
+        context: context1,
         title: "Add Post",
         content: Form(
           key: _formKey,
@@ -147,14 +154,17 @@ class _FeedState extends State<Feed> {
         ),
         buttons: [
           DialogButton(
-            onPressed: () {
+            onPressed: () async {
               _formKey.currentState.save();
-              savePost();
+              // savePost();
+              //TODO user id degistirileek
+              await context.read<PostService>().savePost(description,tempFile,"XC02fBoVBGaCy3WXXwpyucLSPe82");
 
 
 
-              Navigator.pop(context);
-              Navigator.pushNamed(context, "/feed");
+
+              Navigator.pop(context1);
+              Navigator.pushNamed(context1, "/feed");
             },
             child: Text(
               "Add",
