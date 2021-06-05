@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cs310_app/firebase/firestoreService.dart';
+import 'package:cs310_app/utils/variables.dart';
 import 'package:provider/provider.dart';
 import 'package:cs310_app/firebase/authentication_service.dart';
 import 'package:cs310_app/utils/color.dart';
@@ -16,7 +19,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
   bool _visible = false;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
     return Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
@@ -39,7 +42,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
                 // ignore: deprecated_member_use
                 RaisedButton(
-                  onPressed: () {},
+                  onPressed: ()  {
+                    //id degisecek
+                    //TODO
+                    context.read<FirestoreServicee>().updateUserField("seUiDJ9iPVhtf0b7f0D7qIzpZEc2","username","deneme123");
+
+                  },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   child: Text("Change Username",
@@ -54,7 +62,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 ),
 
                 RaisedButton(
-                  onPressed: () {},
+                  onPressed: ()  {
+                    //id degisecek
+                    //TODO
+                    context.read<FirestoreServicee>().updateUserField("seUiDJ9iPVhtf0b7f0D7qIzpZEc2","bio","deneme123");
+
+                  },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                           Radius.circular(10.0))),
@@ -67,7 +80,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 ),
 
                 RaisedButton(
-                  onPressed: () {},
+                  onPressed: ()  {
+                    //id degisecek
+                    //TODO
+                    context.read<AuthenticationService>().changePassword("123456789");
+
+                  },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                           Radius.circular(10.0))),
@@ -105,7 +123,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
 
                 RaisedButton(
-                  onPressed: () {},
+                  onPressed: ()  {
+                    //id degisecek
+                    //TODO
+                    context.read<FirestoreServicee>().deactivateUser("seUiDJ9iPVhtf0b7f0D7qIzpZEc2");
+
+                    },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                           Radius.circular(10.0))),
@@ -119,7 +142,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 ),
 
                 RaisedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    //id degisecek
+                    //TODO
+                    await context.read<AuthenticationService>().deleteAccount();
+                    await context.read<FirestoreServicee>().deleteUser("6jQGXysgjqQsUGTZo0VfQmCCWCV2");
+                  },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                           Radius.circular(10.0))),

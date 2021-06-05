@@ -28,8 +28,6 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
   void getUser() async {
-
-
     await FirebaseFirestore.instance
         .collection('users')
         .doc(userId)

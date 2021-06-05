@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_app/firebase/analytics_service.dart';
 import 'package:cs310_app/firebase/authentication_service.dart';
+import 'package:cs310_app/firebase/firestoreService.dart';
 import 'package:cs310_app/routes/feed.dart';
 import 'package:cs310_app/routes/login.dart';
 import 'package:cs310_app/routes/notification.dart';
@@ -29,7 +31,10 @@ class MyApp extends StatelessWidget {
         ),
         StreamProvider(
           create: (context) => context.read<AuthenticationService>().authStateChanges,
-        )
+        ),
+        Provider<FirestoreServicee>(
+          create: (_) => FirestoreServicee(FirebaseFirestore.instance),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
