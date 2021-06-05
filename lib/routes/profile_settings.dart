@@ -7,6 +7,7 @@ import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../main.dart';
 
@@ -17,6 +18,8 @@ class ProfileSettings extends StatefulWidget {
 
 class _ProfileSettingsState extends State<ProfileSettings> {
   bool _visible = false;
+  String value;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context)  {
@@ -43,9 +46,8 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 // ignore: deprecated_member_use
                 RaisedButton(
                   onPressed: ()  {
-                    //id degisecek
-                    //TODO
-                    context.read<FirestoreServicee>().updateUserField("seUiDJ9iPVhtf0b7f0D7qIzpZEc2","username","deneme123");
+                    _openPopup( "username" );
+
 
                   },
                   shape: RoundedRectangleBorder(
@@ -63,9 +65,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
                 RaisedButton(
                   onPressed: ()  {
-                    //id degisecek
-                    //TODO
-                    context.read<FirestoreServicee>().updateUserField("seUiDJ9iPVhtf0b7f0D7qIzpZEc2","bio","deneme123");
+                    _openPopup("bio" );
 
                   },
                   shape: RoundedRectangleBorder(
@@ -81,9 +81,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
                 RaisedButton(
                   onPressed: ()  {
-                    //id degisecek
-                    //TODO
-                    context.read<AuthenticationService>().changePassword("123456789");
+                    _openPopup("password");
 
                   },
                   shape: RoundedRectangleBorder(
@@ -123,10 +121,16 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
 
                 RaisedButton(
-                  onPressed: ()  {
+                  onPressed: () async  {
                     //id degisecek
                     //TODO
+                    await context.read<AuthenticationService>().signOut();
                     context.read<FirestoreServicee>().deactivateUser("seUiDJ9iPVhtf0b7f0D7qIzpZEc2");
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
+                    );
 
                     },
                   shape: RoundedRectangleBorder(
@@ -147,6 +151,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     //TODO
                     await context.read<AuthenticationService>().deleteAccount();
                     await context.read<FirestoreServicee>().deleteUser("6jQGXysgjqQsUGTZo0VfQmCCWCV2");
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
+                    );
+
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -186,5 +196,46 @@ class _ProfileSettingsState extends State<ProfileSettings> {
           ),
         ),
     );
+  }
+
+
+  _openPopup(String name) {
+    Alert(
+        context: context,
+        title: "Change" + name,
+        content: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: name,
+                ),
+                onSaved:  (String temp){  value = temp;} ,
+              ),
+
+            ],
+          ),
+        ),
+        buttons: [
+          DialogButton(
+            onPressed: () async {
+              await _formKey.currentState.save();
+              name != "password" ?
+                  //TODO user id olucak
+              context.read<FirestoreServicee>().updateUserField("1glzDGoxoST1l1o1lr1orpCRDyg2",name,value)
+                  :  context.read<AuthenticationService>().changePassword(value);
+
+
+
+              Navigator.pop(context);
+              Navigator.pushNamed(context, "/psettings");
+            },
+            child: Text(
+              "Change",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          ),
+        ]).show();
   }
 }
