@@ -47,16 +47,14 @@ class _FeedState extends State<Feed> {
     DocumentReference post1 = FirebaseFirestore.instance.collection('post').doc(
         post1Id);
     post1.set({
-      //TODO id degisecek
-      "userId": "XC02fBoVBGaCy3WXXwpyucLSPe82",
+      "userId": LoggedUser.id,
       "description": description,
       "imageUrl": imageUrl,
-      "date": DateTime.now().toString() + "aaaa",
+      "date": DateTime.now().toString(),
       "likedUsers": [],
       "commentList": []
     });
-    //TODO id degisecek
-    DocumentReference postList = FirebaseFirestore.instance.collection('postList').doc("XC02fBoVBGaCy3WXXwpyucLSPe82");
+    DocumentReference postList = FirebaseFirestore.instance.collection('postList').doc(LoggedUser.id);
     postList.update({
       "postList": FieldValue.arrayUnion([post1Id])
     });
@@ -157,8 +155,7 @@ class _FeedState extends State<Feed> {
             onPressed: () async {
               _formKey.currentState.save();
               // savePost();
-              //TODO user id degistirileek
-              await context.read<PostService>().savePost(description,tempFile,"XC02fBoVBGaCy3WXXwpyucLSPe82");
+              await context.read<PostService>().savePost(description,tempFile,LoggedUser.id);
 
 
 

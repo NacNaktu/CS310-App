@@ -18,10 +18,11 @@ class Post {
   User sender;
   String description;
   String image = " ";
+  String id;
   //DateInputElement date;
   List<Comment> commentList = [];
-  List<String> likedUsers = [];
-  List<String> dislikedUsers = [];
+  List<dynamic> likedUsers = [];
+  List<dynamic> dislikedUsers = [];
 
 
   Post({this.sender, this.image, this.description});

@@ -132,12 +132,9 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                         style: mainTextStyle,),
 
                       trailing: CupertinoSwitch(
-                        //TODO id degistirilecek
                         value: _visible,
                         onChanged: (bool value) async {
-                          //TODO id degisecek
-                          print("change");
-                          await context.read<FirestoreServicee>().changeVisible("seUiDJ9iPVhtf0b7f0D7qIzpZEc2",value);
+                          await context.read<FirestoreServicee>().changeVisible(LoggedUser.id,value);
                           setState(() {
                             _visible = value;
                           });
@@ -150,10 +147,8 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
                 RaisedButton(
                   onPressed: () async  {
-                    //id degisecek
-                    //TODO
                     await context.read<AuthenticationService>().signOut();
-                    context.read<FirestoreServicee>().deactivateUser("seUiDJ9iPVhtf0b7f0D7qIzpZEc2");
+                    context.read<FirestoreServicee>().deactivateUser(LoggedUser.id);
                     Navigator.pop(context);
                     Navigator.push(
                       context,
@@ -175,10 +170,8 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
                 RaisedButton(
                   onPressed: () async {
-                    //id degisecek
-                    //TODO
                     await context.read<AuthenticationService>().deleteAccount();
-                    await context.read<FirestoreServicee>().deleteUser("6jQGXysgjqQsUGTZo0VfQmCCWCV2");
+                    await context.read<FirestoreServicee>().deleteUser(LoggedUser.id);
                     Navigator.pop(context);
                     Navigator.push(
                       context,
@@ -250,8 +243,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             onPressed: () async {
               await _formKey.currentState.save();
               name != "password" ?
-                  //TODO user id olucak
-              context.read<FirestoreServicee>().updateUserField("1glzDGoxoST1l1o1lr1orpCRDyg2",name,value)
+              context.read<FirestoreServicee>().updateUserField(LoggedUser.id,name,value)
                   :  context.read<AuthenticationService>().changePassword(value);
 
 

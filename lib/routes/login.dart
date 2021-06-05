@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
         LoggedUser  = classes.User(name: documentSnapshot["name"], surname: documentSnapshot["surname"],username: documentSnapshot["username"]);
 
         LoggedUser.image = documentSnapshot["imageUrl"];
-        LoggedUser.id = userId;
+        LoggedUser.id = "XUAoBZ8KXaM2Abr7THmul2Y8Iep2";
 
         print(LoggedUser.name+ " " + LoggedUser.image);
       }

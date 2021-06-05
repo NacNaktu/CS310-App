@@ -70,7 +70,8 @@ class _SignUpState extends State<SignUp> {
           "email": mail,
           "imageUrl":imageUrl,
           "visible":true,
-          "active":true
+          "active":true,
+          "bookmarkList":[]
         });
 
         DocumentReference postList = FirebaseFirestore.instance.collection('postList').doc(user.uid);
