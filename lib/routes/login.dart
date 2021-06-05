@@ -23,8 +23,6 @@ class _LoginState extends State<Login> {
   bool private = false;
   String userId;
 
-
-
   final _formKey = GlobalKey<FormState>();
 
   void getUser() async {
@@ -35,12 +33,16 @@ class _LoginState extends State<Login> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         print('Document exists on the database');
-        LoggedUser  = classes.User(name: documentSnapshot["name"], surname: documentSnapshot["surname"],username: documentSnapshot["username"]);
+        LoggedUser = classes.User(
+            name: documentSnapshot["name"],
+            surname: documentSnapshot["surname"],
+            username: documentSnapshot["username"]);
 
         LoggedUser.image = documentSnapshot["imageUrl"];
-        LoggedUser.id = "XUAoBZ8KXaM2Abr7THmul2Y8Iep2";
+        LoggedUser.id = userId;
+        print(LoggedUser.id + "gggggggggggggggggg" + userId);
 
-        print(LoggedUser.name+ " " + LoggedUser.image);
+        print(LoggedUser.name + " " + LoggedUser.image);
       }
     });
   }
@@ -78,30 +80,31 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    FirebaseAuth.instance
-        .authStateChanges()
-        .listen((User user) {
+    FirebaseAuth.instance.authStateChanges().listen((User user) {
       if (user == null) {
-
       } else {
         userId = user.uid;
         getUser();
-
       }
     });
 
-
     return Scaffold(
       backgroundColor: AppColors.background,
-
+      appBar: AppBar(
+        title: Text(
+          'LOGIN',
+          style: appBarStyle,
+        ),
+        backgroundColor: AppColors.appBarColour,
+        centerTitle: true,
+        elevation: 0.0,
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           Padding(
-            padding: const EdgeInsets.only(left: 16.0,top: 80.0, right: 16.0, bottom: 16.0),
+            padding: const EdgeInsets.only(
+                left: 16.0, top: 80.0, right: 16.0, bottom: 16.0),
             child: Form(
               key: _formKey,
               child: Column(
@@ -129,7 +132,6 @@ class _LoginState extends State<Login> {
                             errorStyle: errorStyle,
                           ),
                           keyboardType: TextInputType.emailAddress,
-
                           validator: (value) {
                             if (value.isEmpty) {
                               return 'Please enter your e-mail';
@@ -151,7 +153,7 @@ class _LoginState extends State<Login> {
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget> [
+                    children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(right: 16.0),
                         child: Icon(
@@ -159,7 +161,6 @@ class _LoginState extends State<Login> {
                           color: Colors.white,
                         ),
                       ),
-
                       Expanded(
                         child: TextFormField(
                           style: hintTextStyle,
@@ -203,24 +204,26 @@ class _LoginState extends State<Login> {
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
                                 _formKey.currentState.save();
-                                await context.read<AuthenticationService>().signIn(
-                                  email: mail,
-                                  password: pass,
-
-                                );
+                                await context
+                                    .read<AuthenticationService>()
+                                    .signIn(
+                                      email: mail,
+                                      password: pass,
+                                    );
                                 Navigator.pop(context);
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AuthenticationWrapper()),
                                 );
 
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Logging in')));
+
                               }
                             },
                             child: Padding(
                               padding:
-                              const EdgeInsets.symmetric(vertical: 12.0),
+                                  const EdgeInsets.symmetric(vertical: 12.0),
                               child: Text(
                                 'Login',
                                 style: buttonTextStyle,
@@ -232,7 +235,7 @@ class _LoginState extends State<Login> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child:  SignInButton(
+                    child: SignInButton(
                       Buttons.Google,
                       onPressed: () {},
                     ),
@@ -242,20 +245,26 @@ class _LoginState extends State<Login> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 16.0,top: 0.0, right: 16.0, bottom: 250.0),
-            child:
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            padding: const EdgeInsets.only(
+                left: 16.0, top: 0.0, right: 16.0, bottom: 250.0),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               InkWell(
-                  child: Text('Forgot My Password', style: lightTextStyle),
-                  onTap: () => Navigator.pushNamed(context, "/welcome")),
-
+                child: Text('Forgot My Password', style: lightTextStyle),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, "/welcome");
+                },
+              ),
               Text(
                 "   |   ",
                 style: lightTextStyle,
               ),
               InkWell(
                 child: Text('Sign Up', style: lightTextStyle),
-                onTap: () => Navigator.pushNamed(context, "/signup"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, "/signup");
+                  }
               ),
             ]),
           )
@@ -263,7 +272,4 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
-
 }
-

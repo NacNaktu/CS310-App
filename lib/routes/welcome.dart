@@ -64,6 +64,7 @@ class _WelcomeState extends State<Welcome> {
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
                             onTap: () {
+                              Navigator.pop(context);
                               Navigator.push(context, MaterialPageRoute(
                                 builder: (context) {
                                   return Login();
@@ -102,6 +103,7 @@ class _WelcomeState extends State<Welcome> {
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
                             onTap: () {
+                              Navigator.pop(context);
                               Navigator.push(context, MaterialPageRoute(
                                 builder: (context) {
                                   return SignUp();

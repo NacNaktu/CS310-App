@@ -57,6 +57,7 @@ class _ProfileState extends State<Profile> {
 
 
     double add;
+    print(LoggedUser.id);
 
     add = widget.user.info != null ? 50 : 0;
     return Scaffold(
@@ -66,7 +67,7 @@ class _ProfileState extends State<Profile> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backwardsCompatibility: true,
+            backwardsCompatibility: false,
             brightness: Brightness.dark,
             elevation: 0.0,
             backgroundColor: AppColors.appBarColour,
@@ -93,7 +94,7 @@ class _ProfileState extends State<Profile> {
 
                             GestureDetector(
                               onTap: () {_openPopup(context);},
-                              child: CircleAvatar(backgroundImage: NetworkImage(im),
+                              child: CircleAvatar(backgroundImage: NetworkImage(LoggedUser.image),
                                 radius: 50,),
                             ),
 
@@ -215,7 +216,8 @@ class _ProfileState extends State<Profile> {
     firebase_storage.TaskSnapshot taskSnapshot =  await uploadTask;
     await taskSnapshot.ref.getDownloadURL().then((url){
       setImageUrl(url);
-      context.read<FirestoreServicee>().changePicture("seUiDJ9iPVhtf0b7f0D7qIzpZEc2",url);
+      LoggedUser.image = url;
+      context.read<FirestoreServicee>().changePicture(LoggedUser.id,url);
     });
 
 
@@ -233,11 +235,7 @@ class _ProfileState extends State<Profile> {
         content: Column(
           children: <Widget>[
             InkWell(
-              onTap: () async{
-                image = await selectAndPickImage();
-                
 
-              },
               child: Image.network(im)
             ),
 
@@ -245,7 +243,8 @@ class _ProfileState extends State<Profile> {
         ),
         buttons: [
           DialogButton(
-            onPressed: () {
+            onPressed: () async {
+              image = await selectAndPickImage();
               uploadToStorage(image);
 
 

@@ -3,6 +3,7 @@ import 'package:cs310_app/firebase/authentication_service.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/dimension.dart';
 import 'package:cs310_app/utils/styles.dart';
+import 'package:cs310_app/utils/variables.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -21,44 +22,39 @@ class _SignUpState extends State<SignUp> {
   String imageUrl = "";
   final _formKey = GlobalKey<FormState>();
 
-  void setImageUrl(String tempUrl){
+  void setImageUrl(String tempUrl) {
     this.imageUrl = tempUrl;
   }
 
-
   Future<void> signUpToFirebaseAuth() async {
     await context.read<AuthenticationService>().signUp(
-      email: mail,
-      password: pass,
-    );
-
+          email: mail,
+          password: pass,
+        );
   }
 
   Future<void> signUpUser() async {
-    FirebaseFirestore.instance
+     FirebaseFirestore.instance
         .collection('misc')
         .doc("usernameList")
         .get()
-        .then((DocumentSnapshot documentSnapshot) {
+        .then((DocumentSnapshot documentSnapshot)  {
       if (documentSnapshot.exists) {
         print('Document exists on the database');
-        if(documentSnapshot["list"].contains(userName)){
+        if (documentSnapshot["list"].contains(userName)) {
           print("username exists");
-        }
-        else{
-          signUpToFirebaseAuth();
-
+        } else {
+           signUpToFirebaseAuth();
         }
       }
     });
-
 
     FirebaseAuth.instance.authStateChanges().listen((User user) {
       if (user == null) {
         print('User is currently signed out!');
       } else {
         DocumentReference users =
-        FirebaseFirestore.instance.collection('users').doc(user.uid);
+            FirebaseFirestore.instance.collection('users').doc();
         users.set({
           'name': name,
           'surname': "surname",
@@ -68,24 +64,23 @@ class _SignUpState extends State<SignUp> {
           "posts": "0",
           "postList": "",
           "email": mail,
-          "imageUrl":imageUrl,
-          "visible":true,
-          "active":true,
-          "bookmarkList":[]
+          "imageUrl": im,
+          "visible": true,
+          "active": true,
+          "bookmarkList": []
         });
 
-        DocumentReference postList = FirebaseFirestore.instance.collection('postList').doc(user.uid);
-        postList.set(
-            {"postList":[]}
-        );
+        DocumentReference postList =
+            FirebaseFirestore.instance.collection('postList').doc(user.uid);
+        postList.set({"postList": []});
 
-        DocumentReference usernameList = FirebaseFirestore.instance.collection('misc').doc("usernameList");
+        DocumentReference usernameList =
+            FirebaseFirestore.instance.collection('misc').doc("usernameList");
         usernameList.update({
-          "list":FieldValue.arrayUnion([userName])
+          "list": FieldValue.arrayUnion([userName])
         });
       }
     });
-
 
     Navigator.pop(context);
     Navigator.push(
@@ -195,8 +190,8 @@ class _SignUpState extends State<SignUp> {
                       Expanded(
                         flex: 1,
                         child: TextFormField(
+                          style: hintTextStyle,
                           decoration: InputDecoration(
-
                             hintText: 'Name',
                             hintStyle: hintTextStyle,
                             labelStyle: labelStyle,
@@ -231,8 +226,8 @@ class _SignUpState extends State<SignUp> {
                       Expanded(
                         flex: 1,
                         child: TextFormField(
+                          style: hintTextStyle,
                           decoration: InputDecoration(
-
                             hintText: 'Username',
                             hintStyle: hintTextStyle,
                             labelStyle: labelStyle,
@@ -270,8 +265,8 @@ class _SignUpState extends State<SignUp> {
                       Expanded(
                         flex: 1,
                         child: TextFormField(
+                          style: hintTextStyle,
                           decoration: InputDecoration(
-
                             hintText: 'Password',
                             hintStyle: hintTextStyle,
                             labelStyle: labelStyle,
@@ -299,6 +294,7 @@ class _SignUpState extends State<SignUp> {
                       Expanded(
                         flex: 1,
                         child: TextFormField(
+                          style: hintTextStyle,
                           decoration: InputDecoration(
 
                             hintText: 'Password (Repeat)',
@@ -344,16 +340,16 @@ class _SignUpState extends State<SignUp> {
                                       "Error", 'Passwords must match');
                                 } else {
                                   signUpUser();
+
                                 }
                                 //
 
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Signing up')));
+
                               }
                             },
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 12.0),
                               child: Text(
                                 'Sign Up',
                                 style: buttonTextStyle,
@@ -371,8 +367,10 @@ class _SignUpState extends State<SignUp> {
                           InkWell(
                               child: Text('Forgot My Password',
                                   style: lightTextStyle),
-                              onTap: () =>
-                                  Navigator.pushNamed(context, "/welcome")),
+                              onTap: () {
+                                Navigator.pop(context);
+                                Navigator.pushNamed(context, "/welcome");
+                              }),
                           /*VerticalDivider(thickness: 5,
                 width: 20,
                 color: Colors.black,
@@ -384,8 +382,10 @@ class _SignUpState extends State<SignUp> {
                           ),
                           InkWell(
                             child: Text('Login', style: lightTextStyle),
-                            onTap: () =>
-                                Navigator.pushNamed(context, "/login"),
+                            onTap: () {
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, "/login");
+                            },
                           ),
                         ]),
                   )
