@@ -22,8 +22,8 @@ class _SearchState extends State<Search> {
   String search;
 
   Future<void> loadUsers() async {
-    await context.read<FirestoreServicee>().getAllUser();
-    await Future.delayed(Duration(milliseconds: 100000));
+    context.read<FirestoreServicee>().getAllUser();
+    await Future.delayed(Duration(milliseconds: 200));
   }
 
   @protected

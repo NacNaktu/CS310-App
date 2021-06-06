@@ -26,6 +26,7 @@ class FirestoreServicee {
   }
 
   Future<void> getAllUser() async {
+
     List<classes.User> tempList = [];
     print("icerde");
     print("**********************");

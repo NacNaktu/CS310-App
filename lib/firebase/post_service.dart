@@ -189,7 +189,7 @@ class PostService {
   }
 
   Future<void> bookmarkPost(String postId, String userId) async {
-    ;
+
 
     await _firestore
         .collection('users')

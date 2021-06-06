@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_app/firebase/firestoreService.dart';
 import 'package:cs310_app/firebase/post_service.dart';
@@ -16,6 +15,8 @@ import 'dart:io';
 
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+import 'connections.dart';
+
 class Profile extends StatefulWidget {
   final User user;
 
@@ -30,31 +31,25 @@ class _ProfileState extends State<Profile> {
   File image;
   FirestoreServicee _service;
 
-  void setImageUrl(String tempUrl){
+  void setImageUrl(String tempUrl) {
     this.imageUrl = tempUrl;
   }
-
 
   Future<void> loadPosts() async {
     await context.read<PostService>().getAllUserPostsId(LoggedUser.id);
     await Future.delayed(Duration(milliseconds: 100000));
   }
 
-
   @protected
   @mustCallSuper
   // ignore: must_call_super
-  void initState()  {
+  void initState() {
     loadPosts();
   }
 
-
-
   @override
-  Widget build(BuildContext context)  {
+  Widget build(BuildContext context) {
     loadPosts();
-
-
 
     double add;
     print(LoggedUser.id);
@@ -63,7 +58,6 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       bottomNavigationBar: BottomBar(index: 2),
       backgroundColor: AppColors.background,
-
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -71,17 +65,13 @@ class _ProfileState extends State<Profile> {
             brightness: Brightness.dark,
             elevation: 0.0,
             backgroundColor: AppColors.appBarColour,
-
             floating: true,
-            collapsedHeight: 208 + add,
-
+            collapsedHeight: 218 + add,
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: const EdgeInsets.fromLTRB(8, 30, 8, 8),
               centerTitle: false,
-
               title: Container(
                 width: MediaQuery.of(context).size.width - 16,
-
                 child: Column(
                   children: [
                     Row(
@@ -91,25 +81,31 @@ class _ProfileState extends State<Profile> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-
                             GestureDetector(
-                              onTap: () {_openPopup(context);},
-                              child: CircleAvatar(backgroundImage: NetworkImage(im),
-                                radius: 50,),
+                              onTap: () {
+                                _openPopup(context);
+                              },
+                              child: CircleAvatar(
+                                //TODO change to user image
+                                backgroundImage: NetworkImage(im),
+                                radius: 50,
+                              ),
                             ),
-
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  widget.user.name + " " + widget.user.surname,
-                                  style: underlinedStyle,
-                                ),
-                                Text(
-                                  widget.user.username,
-                                  style: underlinedStyle,
-                                )
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    widget.user.name ,
+                                    style: underlinedStyle,
+                                  ),
+                                  Text(
+                                    widget.user.username,
+                                    style: underlinedStyle,
+                                  )
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -118,7 +114,6 @@ class _ProfileState extends State<Profile> {
                           icon: Icon(
                             Icons.settings,
                             size: 20.0,
-
                           ),
                           onPressed: () {
                             Navigator.pushNamed(
@@ -127,22 +122,23 @@ class _ProfileState extends State<Profile> {
                             );
                           },
                         ),
-
-
                       ],
                     ),
-
                     Container(
-                      height: widget.user.info != null? 50:0,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          widget.user.info != null ? widget.user.info : "",
-                          style: bioTextStyle,
-                        ),
+                      height: widget.user.info != null ? 50 : 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              widget.user.info != null ? widget.user.info : "",
+                              style: bioTextStyle,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-
                     Container(
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                       child: Row(
@@ -150,24 +146,25 @@ class _ProfileState extends State<Profile> {
                         children: [
                           Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: OutlinedButton(
-                                    style: profilePageButtonStyle,
-                                    onPressed: () {
-                                      //TODO connect this to Topics
-                                    },
-                                    child: Text("Topics")),
-                              )),
+                            padding: const EdgeInsets.all(5.0),
+                            child: OutlinedButton(
+                                style: profilePageButtonStyle,
+                                onPressed: () {
+                                  //TODO connect this to connections
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Connections(user: widget.user)),);
+                                },
+                                child: Text("Connections")),
+                          )),
                           Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: OutlinedButton(
-                                    style: profilePageButtonStyle,
-                                    onPressed: () {
-                                      //TODO connect this to connections
-                                    },
-                                    child: Text("Connections")),
-                              )),
+                            padding: const EdgeInsets.all(5.0),
+                            child: OutlinedButton(
+                                style: profilePageButtonStyle,
+                                onPressed: () {
+                                  //TODO connect this to Topics
+                                },
+                                child: Text("Topics")),
+                          )),
                         ],
                       ),
                     ),
@@ -194,39 +191,35 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Future<File> selectAndPickImage() async{
-
+  Future<File> selectAndPickImage() async {
     File _image;
     final picker = ImagePicker();
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-
     if (pickedFile != null) {
-      _image = File(pickedFile.path,);
+      _image = File(
+        pickedFile.path,
+      );
     } else {
       print('No image selected.');
     }
     return _image;
   }
 
-  uploadToStorage(File image) async{
+  uploadToStorage(File image) async {
     String imageName = DateTime.now().millisecondsSinceEpoch.toString();
-    firebase_storage.Reference reference =   firebase_storage.FirebaseStorage.instance.ref().child(imageName);
+    firebase_storage.Reference reference =
+        firebase_storage.FirebaseStorage.instance.ref().child(imageName);
     firebase_storage.UploadTask uploadTask = reference.putFile(image);
-    firebase_storage.TaskSnapshot taskSnapshot =  await uploadTask;
-    await taskSnapshot.ref.getDownloadURL().then((url){
+    firebase_storage.TaskSnapshot taskSnapshot = await uploadTask;
+    await taskSnapshot.ref.getDownloadURL().then((url) {
       setImageUrl(url);
       LoggedUser.image = url;
-      context.read<FirestoreServicee>().changePicture(LoggedUser.id,url);
+      context.read<FirestoreServicee>().changePicture(LoggedUser.id, url);
     });
 
-
-
-
-    
     //Todo resim ekleme eklenicek
   }
-
 
   _openPopup(context) {
     Alert(
@@ -235,22 +228,29 @@ class _ProfileState extends State<Profile> {
         content: Column(
           children: <Widget>[
             InkWell(
-
-              child: Image.network(im)
-            ),
-
+                child: Expanded(
+              flex: 3,
+              child: Container(
+                width: MediaQuery.of(context).size.width - 20,
+                height: MediaQuery.of(context).size.width + 20,
+                child: Image.network(
+                  im,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            )),
           ],
         ),
         buttons: [
           DialogButton(
             onPressed: () async {
               image = await selectAndPickImage();
+
               uploadToStorage(image);
-
-
+              await Future.delayed(Duration(milliseconds: 110));
 
               Navigator.pop(context);
-              Navigator.pushNamed(context, "/profile");
+              Navigator.pushReplacementNamed(context, "/profile");
             },
             child: Text(
               "Change",

@@ -30,7 +30,7 @@ class _LoginState extends State<Login> {
         .collection('users')
         .doc(userId)
         .get()
-        .then((DocumentSnapshot documentSnapshot) {
+        .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
         print('Document exists on the database');
         LoggedUser = classes.User(
@@ -38,9 +38,20 @@ class _LoginState extends State<Login> {
             surname: documentSnapshot["surname"],
             username: documentSnapshot["username"]);
 
+
         LoggedUser.image = documentSnapshot["imageUrl"];
         LoggedUser.id = userId;
         print(LoggedUser.id + "gggggggggggggggggg" + userId);
+        //LoggedUser.info = documentSnapshot["bio"];
+
+
+
+        LoggedUser.connections = documentSnapshot["connections"];
+        print("/////////////////////////////////////////////");
+        print(documentSnapshot["connections"]);
+        print("/////////////////////////////////////////////");
+
+
 
         print(LoggedUser.name + " " + LoggedUser.image);
       }

@@ -31,7 +31,7 @@ final secondaryTextStyle = TextStyle(
 );
 
 final bioTextStyle = TextStyle(
-  color:  AppColors.textColor,
+  color:  Colors.white,
   fontSize: 16.0,
   fontWeight: FontWeight.w500,
   letterSpacing: -0.7,

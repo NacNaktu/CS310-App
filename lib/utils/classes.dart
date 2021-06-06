@@ -9,7 +9,7 @@ class User{
   List<Post> bookmarked = [];
   List<Post> shared = [];
   List<String> locations = [];
-  List<User> connections = [];
+  List<dynamic> connections = [];
 
   User({this.name, this.surname, this.username,});
 }
@@ -20,7 +20,7 @@ class Post {
   String image = " ";
   String id;
   //DateInputElement date;
-  List<Comment> commentList = [];
+  List<dynamic> commentList = [];
   List<dynamic> likedUsers = [];
   List<dynamic> dislikedUsers = [];
 

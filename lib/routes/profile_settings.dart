@@ -96,6 +96,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                   onPressed: ()  {
                     _openPopup("bio" );
 
+
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -150,7 +151,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     await context.read<AuthenticationService>().signOut();
                     context.read<FirestoreServicee>().deactivateUser(LoggedUser.id);
                     Navigator.pop(context);
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
                     );
@@ -173,7 +174,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     await context.read<AuthenticationService>().deleteAccount();
                     await context.read<FirestoreServicee>().deleteUser(LoggedUser.id);
                     Navigator.pop(context);
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
                     );
@@ -193,8 +194,10 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 RaisedButton(
                   onPressed: () async {
                     await context.read<AuthenticationService>().signOut();
+
                     Navigator.pop(context);
-                    Navigator.push(
+
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
                     );
@@ -246,10 +249,17 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               context.read<FirestoreServicee>().updateUserField(LoggedUser.id,name,value)
                   :  context.read<AuthenticationService>().changePassword(value);
 
+              if (name == "bio"){
+                LoggedUser.info = value;
+              }
+              if (name == "username"){
+                LoggedUser.username = value;
+              }
+
 
 
               Navigator.pop(context);
-              Navigator.pushNamed(context, "/psettings");
+              Navigator.pushReplacementNamed(context, "/psettings");
             },
             child: Text(
               "Change",

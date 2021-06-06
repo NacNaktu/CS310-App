@@ -19,8 +19,8 @@ class UserCard extends StatefulWidget {
 class _UserCardState extends State<UserCard> {
   @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
-      onTap: (){
+    return GestureDetector(
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Profile(user: widget.user)),
@@ -29,16 +29,32 @@ class _UserCardState extends State<UserCard> {
       child: Card(
         color: AppColors.cardColor,
         child: Container(
-          width:  MediaQuery. of(context). size. width,
+          width: MediaQuery.of(context).size.width,
           height: 70,
           child: Column(
             children: [
               ListTile(
-                leading: CircleAvatar(backgroundImage: NetworkImage(im),
-                  radius: 50,),
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(im),
+                  radius: 50,
+                ),
                 title: Text(widget.user.name + " " + widget.user.surname),
                 subtitle: Text(widget.user.username),
+                trailing:IconButton(
+                  icon: LoggedUser.connections.contains(widget.user.id) ? Icon(Icons.remove_circle_outline) : Icon(Icons.add_circle_outline),
+                  onPressed: () {
+                    //TODO CHANGE IN DATABASE
+                    if(LoggedUser.connections.contains(widget.user.id)){
+                      setState(() {
+                        LoggedUser.connections.remove(widget.user.id);
+                      });
+                    }else{
+                      //TODO Send Notification
+                    }
+                  },
+                ) ,
               ),
+
             ],
           ),
         ),

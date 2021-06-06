@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import '../main.dart';
 
 class SignUp extends StatefulWidget {
+
   @override
   _SignUpState createState() => _SignUpState();
 }
@@ -59,12 +60,12 @@ class _SignUpState extends State<SignUp> {
           'name': name,
           'surname': "surname",
           'username': userName,
-          "follower": "0",
-          "following": "0",
+          "bio" : "",
+          "connections": [],
           "posts": "0",
           "postList": "",
           "email": mail,
-          "imageUrl": im,
+          "imageUrl": "https://firebasestorage.googleapis.com/v0/b/cs310-7f676.appspot.com/o/16-168770_user-iconset-no-profile-picture-icon-circle-clipart.png?alt=media&token=dd5764a0-d267-484b-a341-9d74201f5fb9",
           "visible": true,
           "active": true,
           "bookmarkList": []
