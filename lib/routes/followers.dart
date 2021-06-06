@@ -7,19 +7,19 @@ import 'package:cs310_app/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Connections extends StatefulWidget {
+class Followers extends StatefulWidget {
   final User user;
 
-  const Connections({Key key, this.user}) : super(key: key);
+  const Followers({Key key, this.user}) : super(key: key);
   @override
-  _ConnectionsState createState() => _ConnectionsState();
+  _FollowersState createState() => _FollowersState();
 }
 
-class _ConnectionsState extends State<Connections> {
+class _FollowersState extends State<Followers> {
 
 
   Future<void> loadUsers() async {
-    context.read<FirestoreServicee>().getAllUser();
+    context.read<FirestoreServicee>().getFollowers(widget.user);
     await Future.delayed(Duration(milliseconds: 200));
   }
 
@@ -34,8 +34,7 @@ class _ConnectionsState extends State<Connections> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO GET Following CONNECTIONS HERE
-    userConnections = searchUser;
+
 
 
     return Scaffold(
@@ -53,7 +52,7 @@ class _ConnectionsState extends State<Connections> {
           Expanded(
             flex: 1,
             child: GridView.builder(
-                itemCount: userConnections.length,
+                itemCount: userFollowers.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1,
                   mainAxisSpacing: 0,
@@ -61,7 +60,7 @@ class _ConnectionsState extends State<Connections> {
                   childAspectRatio: 4.6,
                 ),
                 itemBuilder: (context, index) => UserCard(
-                  user: userConnections[index],
+                  user: userFollowers[index],
 
                 )),
           ),

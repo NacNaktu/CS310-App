@@ -1,6 +1,8 @@
 
 import 'package:cs310_app/firebase/firestoreService.dart';
 import 'package:cs310_app/routes/profile.dart';
+import 'package:cs310_app/routes/profilePerson.dart';
+import 'package:cs310_app/routes/profilePrivate.dart';
 import 'package:cs310_app/utils/classes.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/variables.dart';
@@ -24,10 +26,24 @@ class _UserCardState extends State<UserCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
+        if(widget.user.private){
+          if(LoggedUser.connections.contains(widget.user.id)){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PersonProfile(user: widget.user)),
+            );
+          }else{
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PrivateProfile(user: widget.user)),
+            );
+          }
+        }else{
+          Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Profile(user: widget.user)),
-        );
+          MaterialPageRoute(builder: (context) => PersonProfile(user: widget.user)),
+          );
+        }
       },
       child: Card(
         color: AppColors.cardColor,

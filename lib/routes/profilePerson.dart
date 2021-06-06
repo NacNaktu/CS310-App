@@ -18,16 +18,16 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'connections.dart';
 import 'followers.dart';
 
-class Profile extends StatefulWidget {
+class PersonProfile extends StatefulWidget {
   final User user;
 
-  const Profile({Key key, this.user}) : super(key: key);
+  const PersonProfile({Key key, this.user}) : super(key: key);
 
   @override
-  _ProfileState createState() => _ProfileState();
+  _PersonProfileState createState() => _PersonProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _PersonProfileState extends State<PersonProfile> {
   String imageUrl = "";
   File image;
   FirestoreServicee _service;
@@ -82,15 +82,10 @@ class _ProfileState extends State<Profile> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            GestureDetector(
-                              onTap: () {
-                                _openPopup(context);
-                              },
-                              child: CircleAvatar(
-                                //TODO change to user image
-                                backgroundImage: NetworkImage(im),
-                                radius: 50,
-                              ),
+                            CircleAvatar(
+                              //TODO change to user image
+                              backgroundImage: NetworkImage(im),
+                              radius: 50,
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -113,14 +108,11 @@ class _ProfileState extends State<Profile> {
                         IconButton(
                           splashRadius: 20,
                           icon: Icon(
-                            Icons.settings,
+                            Icons.report,
                             size: 20.0,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              "/psettings",
-                            );
+                            //TODO report in database
                           },
                         ),
                       ],
@@ -147,26 +139,26 @@ class _ProfileState extends State<Profile> {
                         children: [
                           Expanded(
                               child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: OutlinedButton(
-                                style: profilePageButtonStyle,
-                                onPressed: () {
+                                padding: const EdgeInsets.all(5.0),
+                                child: OutlinedButton(
+                                    style: profilePageButtonStyle,
+                                    onPressed: () {
 
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Connections(user: widget.user)),);
-                                },
-                                child: Text("Following")),
-                          )),
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Connections(user: widget.user)),);
+                                    },
+                                    child: Text("Following")),
+                              )),
                           Expanded(
                               child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: OutlinedButton(
-                                style: profilePageButtonStyle,
-                                onPressed: () {
+                                padding: const EdgeInsets.all(5.0),
+                                child: OutlinedButton(
+                                    style: profilePageButtonStyle,
+                                    onPressed: () {
 
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Followers(user: widget.user)),);
-                                },
-                                child: Text("Followers")),
-                          )),
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Followers(user: widget.user)),);
+                                    },
+                                    child: Text("Followers")),
+                              )),
                         ],
                       ),
                     ),
@@ -177,7 +169,7 @@ class _ProfileState extends State<Profile> {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
+                  (BuildContext context, int index) {
                 return Container(
                   height: 500,
                   child: PostCard(
@@ -191,74 +183,5 @@ class _ProfileState extends State<Profile> {
         ],
       ),
     );
-  }
-
-  Future<File> selectAndPickImage() async {
-    File _image;
-    final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      _image = File(
-        pickedFile.path,
-      );
-    } else {
-      print('No image selected.');
-    }
-    return _image;
-  }
-
-  uploadToStorage(File image) async {
-    String imageName = DateTime.now().millisecondsSinceEpoch.toString();
-    firebase_storage.Reference reference =
-        firebase_storage.FirebaseStorage.instance.ref().child(imageName);
-    firebase_storage.UploadTask uploadTask = reference.putFile(image);
-    firebase_storage.TaskSnapshot taskSnapshot = await uploadTask;
-    await taskSnapshot.ref.getDownloadURL().then((url) {
-      setImageUrl(url);
-      LoggedUser.image = url;
-      context.read<FirestoreServicee>().changePicture(LoggedUser.id, url);
-    });
-
-    //Todo resim ekleme eklenicek
-  }
-
-  _openPopup(context) {
-    Alert(
-        context: context,
-        title: "Change Picture",
-        content: Column(
-          children: <Widget>[
-            InkWell(
-                child: Expanded(
-              flex: 3,
-              child: Container(
-                width: MediaQuery.of(context).size.width - 20,
-                height: MediaQuery.of(context).size.width + 20,
-                child: Image.network(
-                  im,
-                  fit: BoxFit.fill,
-                ),
-              ),
-            )),
-          ],
-        ),
-        buttons: [
-          DialogButton(
-            onPressed: () async {
-              image = await selectAndPickImage();
-
-              uploadToStorage(image);
-              await Future.delayed(Duration(milliseconds: 110));
-
-              Navigator.pop(context);
-              Navigator.pushReplacementNamed(context, "/profile");
-            },
-            child: Text(
-              "Change",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-          ),
-        ]).show();
   }
 }

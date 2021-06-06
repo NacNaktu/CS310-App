@@ -5,6 +5,8 @@ import 'classes.dart';
 
 //Feed Page
 
+List<Comment> commentLst = [];
+
 List<Post> feedPost = [
   Post(
     sender: User(
@@ -42,36 +44,6 @@ List<Post> searchContent = [
 
 ];
 
-List<Post> searchTopic = [
-
-
-];
-
-List<Post> searchLoc = [
-  Post(
-    sender: User(
-        name: "Yunus",
-        surname: "YASAR",
-        username: "@yunusy"
-    ),
-
-    image: "https://im0-tub-tr.yandex.net/i?id=f6f5e2ee81f7d4c4eecd02d738d31bad&n=13",
-      description: "dlashdlasjhdlkjaslkdjasljd"
-  ),
-
-  Post(
-    sender: User(
-        name: "Can Utkan",
-        surname: "KARAHAN",
-        username: "@ukarahan"
-    ),
-
-    image: "https://im0-tub-tr.yandex.net/i?id=f6f5e2ee81f7d4c4eecd02d738d31bad&n=13",
-    description: "dlashdlasjhdlkjaslkdjasljd"
-  ),
-
-
-];
 
 //Notifications Page
 
@@ -97,7 +69,8 @@ List<User> userConnections = [
 
 ];
 
-List<String> userTopics = [
+List<User> userFollowers = [
 
 ];
+
 

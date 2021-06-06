@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_app/utils/classes.dart' as classes;
 import 'package:cs310_app/utils/grid_view.dart';
+import 'package:cs310_app/utils/variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart';
 
@@ -28,8 +29,6 @@ class FirestoreServicee {
   Future<void> getAllUser() async {
 
     List<classes.User> tempList = [];
-    print("icerde");
-    print("**********************");
 
     await _firestore.collection("users").get().then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
@@ -40,8 +39,50 @@ class FirestoreServicee {
       });
     });
 
+
+
     searchUser = tempList;
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(Duration(milliseconds: 2000));
+  }
+
+  Future<void> getConnections(classes.User user) async {
+
+    List<classes.User> tempList = [];
+
+    await _firestore.collection("users").get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        if (user.connections.contains(doc.id)){
+          classes.User tempUser = classes.User(username: doc["username"],surname: doc["surname"],name: doc["name"]);
+          tempUser.id = doc.id;
+          tempList.add(tempUser);
+        }
+
+      });
+    });
+
+
+
+    userConnections = tempList;
+    await Future.delayed(Duration(milliseconds: 2000));
+  }
+
+  Future<void> getFollowers(classes.User user) async {
+
+    List<classes.User> tempList = [];
+
+    await _firestore.collection("users").get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        if (user.followers.contains(doc.id)){
+          classes.User tempUser = classes.User(username: doc["username"],surname: doc["surname"],name: doc["name"]);
+          tempUser.id = doc.id;
+          tempList.add(tempUser);
+        }
+
+      });
+    });
+
+    userFollowers = tempList;
+    await Future.delayed(Duration(milliseconds: 2000));
   }
 
   void deactivateUser(String userId) async {

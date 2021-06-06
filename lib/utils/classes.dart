@@ -24,14 +24,15 @@ class Post {
   List<dynamic> commentList = [];
   List<dynamic> likedUsers = [];
   List<dynamic> dislikedUsers = [];
+  List<Comment> comments = [];
 
 
   Post({this.sender, this.image, this.description});
 }
 class Comment {
-  int likes;
-  int dislike;
+  User user;
   String comment;
+  String id;
   //DateInputElement date;
 
   Comment({this.comment,});

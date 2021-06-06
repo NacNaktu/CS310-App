@@ -19,7 +19,7 @@ class _ConnectionsState extends State<Connections> {
 
 
   Future<void> loadUsers() async {
-    context.read<FirestoreServicee>().getAllUser();
+    context.read<FirestoreServicee>().getConnections(widget.user);
     await Future.delayed(Duration(milliseconds: 200));
   }
 
@@ -35,7 +35,7 @@ class _ConnectionsState extends State<Connections> {
   @override
   Widget build(BuildContext context) {
     //TODO GET ALL USER CONNECTIONS HERE
-    userConnections = searchUser;
+
 
 
     return Scaffold(
