@@ -110,4 +110,56 @@ class FirestoreServicee {
         .doc(userId)
         .set({"imageUrl": url}, SetOptions(merge: true));
   }
+
+  Future<void> removeConnection(String personId, String userId) async {
+
+
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+
+        List<dynamic> list = documentSnapshot["connections"];
+        if (list.contains(personId)) {
+          print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+          _firestore.collection('users').doc(userId).update({
+            "connections": FieldValue.arrayRemove([personId])
+          });
+          _firestore.collection('users').doc(personId).update({
+            "followers": FieldValue.arrayRemove([userId])
+          });
+        }
+      } else {
+        print("Person does not exist");
+      }
+    });
+  }
+
+  Future<void> addConnection(String personId, String userId) async {
+
+
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+
+        List<dynamic> list = documentSnapshot["connections"];
+        if (list.contains(personId)) {}else{
+          print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+          _firestore.collection('users').doc(userId).update({
+            "connections": FieldValue.arrayUnion([personId])
+          });
+          _firestore.collection('users').doc(personId).update({
+            "followers": FieldValue.arrayUnion([userId])
+          });
+        }
+      } else {
+        print("Person does not exist");
+      }
+    });
+  }
 }

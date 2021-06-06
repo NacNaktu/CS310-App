@@ -8,9 +8,9 @@ import 'package:cs310_app/utils/styles.dart';
 import 'package:cs310_app/utils/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/services.dart';
 
-import 'User.dart';
+
+
 
 class PostCard extends StatefulWidget {
   final Post post;

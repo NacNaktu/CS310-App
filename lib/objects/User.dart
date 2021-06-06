@@ -1,8 +1,11 @@
+
+import 'package:cs310_app/firebase/firestoreService.dart';
 import 'package:cs310_app/routes/profile.dart';
 import 'package:cs310_app/utils/classes.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/variables.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserCard extends StatefulWidget {
   final User user;
@@ -38,18 +41,28 @@ class _UserCardState extends State<UserCard> {
                   backgroundImage: NetworkImage(im),
                   radius: 50,
                 ),
-                title: Text(widget.user.name + " " + widget.user.surname),
+                title: Text(widget.user.name),
                 subtitle: Text(widget.user.username),
                 trailing:IconButton(
                   icon: LoggedUser.connections.contains(widget.user.id) ? Icon(Icons.remove_circle_outline) : Icon(Icons.add_circle_outline),
-                  onPressed: () {
+                  onPressed: () async {
                     //TODO CHANGE IN DATABASE
                     if(LoggedUser.connections.contains(widget.user.id)){
+                      await context.read<FirestoreServicee>().removeConnection(widget.user.id, LoggedUser.id);
+
                       setState(() {
                         LoggedUser.connections.remove(widget.user.id);
                       });
                     }else{
-                      //TODO Send Notification
+                      if(widget.user.private){
+                        //TODO Send Notification
+                      }else{
+                        await context.read<FirestoreServicee>().addConnection(widget.user.id, LoggedUser.id);
+                        setState(() {
+                          LoggedUser.connections.add(widget.user.id);
+                        });
+                      }
+
                     }
                   },
                 ) ,

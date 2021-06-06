@@ -153,7 +153,7 @@ class _ProfileState extends State<Profile> {
                                   //TODO connect this to connections
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => Connections(user: widget.user)),);
                                 },
-                                child: Text("Connections")),
+                                child: Text("Following")),
                           )),
                           Expanded(
                               child: Padding(
@@ -163,7 +163,7 @@ class _ProfileState extends State<Profile> {
                                 onPressed: () {
                                   //TODO connect this to Topics
                                 },
-                                child: Text("Topics")),
+                                child: Text("Followers")),
                           )),
                         ],
                       ),

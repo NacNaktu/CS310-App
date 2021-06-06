@@ -3,8 +3,6 @@
 import 'package:cs310_app/firebase/firestoreService.dart';
 import 'package:cs310_app/models/bottomBar.dart';
 import 'package:cs310_app/models/search_content.dart';
-import 'package:cs310_app/models/search_loc.dart';
-import 'package:cs310_app/models/search_post.dart';
 import 'package:cs310_app/models/search_user.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +20,8 @@ class _SearchState extends State<Search> {
   String search;
 
   Future<void> loadUsers() async {
-    context.read<FirestoreServicee>().getAllUser();
-    await Future.delayed(Duration(milliseconds: 200));
+    await context.read<FirestoreServicee>().getAllUser();
+    await Future.delayed(Duration(milliseconds: 200000));
   }
 
   @protected
@@ -41,7 +39,7 @@ class _SearchState extends State<Search> {
 
 
     return DefaultTabController(
-      length: 4,
+      length: 2,
       child: Scaffold(
         bottomNavigationBar: BottomBar(index: 1),
         backgroundColor: AppColors.background,
@@ -80,12 +78,6 @@ class _SearchState extends State<Search> {
               Tab(
                 text: "Content",
               ),
-              Tab(
-                text: "Topics",
-              ),
-              Tab(
-                text: "Locations",
-              ),
             ],
 
           ),
@@ -94,8 +86,6 @@ class _SearchState extends State<Search> {
           children: [
             SearchUser(),
             SearchCont(),
-            SearchPost(),
-            SearchLoc(),
           ],
         ),
       ),

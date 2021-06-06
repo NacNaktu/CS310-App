@@ -10,6 +10,7 @@ class User{
   List<Post> shared = [];
   List<String> locations = [];
   List<dynamic> connections = [];
+  List<dynamic> followers = [];
 
   User({this.name, this.surname, this.username,});
 }

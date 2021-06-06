@@ -42,18 +42,16 @@ class _LoginState extends State<Login> {
         LoggedUser.image = documentSnapshot["imageUrl"];
         LoggedUser.id = userId;
         print(LoggedUser.id + "gggggggggggggggggg" + userId);
-        //LoggedUser.info = documentSnapshot["bio"];
+        LoggedUser.info = documentSnapshot["bio"];
 
 
 
         LoggedUser.connections = documentSnapshot["connections"];
-        print("/////////////////////////////////////////////");
-        print(documentSnapshot["connections"]);
-        print("/////////////////////////////////////////////");
+        LoggedUser.followers = documentSnapshot["followers"];
 
 
 
-        print(LoggedUser.name + " " + LoggedUser.image);
+
       }
     });
   }
@@ -114,11 +112,11 @@ class _LoginState extends State<Login> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-                left: 16.0, top: 80.0, right: 16.0, bottom: 16.0),
+            padding: const EdgeInsets.all(8),
             child: Form(
               key: _formKey,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -244,41 +242,31 @@ class _LoginState extends State<Login> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: SignInButton(
-                      Buttons.Google,
-                      onPressed: () {},
-                    ),
-                  )
+
                 ],
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 16.0, top: 0.0, right: 16.0, bottom: 250.0),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              InkWell(
-                child: Text('Forgot My Password', style: lightTextStyle),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            InkWell(
+              child: Text('Forgot My Password', style: lightTextStyle),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/welcome");
+              },
+            ),
+            Text(
+              "   |   ",
+              style: lightTextStyle,
+            ),
+            InkWell(
+              child: Text('Sign Up', style: lightTextStyle),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, "/welcome");
-                },
-              ),
-              Text(
-                "   |   ",
-                style: lightTextStyle,
-              ),
-              InkWell(
-                child: Text('Sign Up', style: lightTextStyle),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, "/signup");
-                  }
-              ),
-            ]),
-          )
+                  Navigator.pushNamed(context, "/signup");
+                }
+            ),
+          ])
         ],
       ),
     );

@@ -34,7 +34,7 @@ class _ConnectionsState extends State<Connections> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO GET ALL USER CONNECTIONS HERE
+    //TODO GET Following CONNECTIONS HERE
     userConnections = searchUser;
 
 
@@ -44,7 +44,7 @@ class _ConnectionsState extends State<Connections> {
       appBar: AppBar(
         backwardsCompatibility: false,
         backgroundColor: AppColors.appBarColour,
-        title: Text("Following"),
+        title: Text("Followers"),
         centerTitle: true,
       ),
       body: Column(

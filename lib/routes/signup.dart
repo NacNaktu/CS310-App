@@ -62,6 +62,7 @@ class _SignUpState extends State<SignUp> {
           'username': userName,
           "bio" : "",
           "connections": [],
+          "followers": [],
           "posts": "0",
           "postList": "",
           "email": mail,
