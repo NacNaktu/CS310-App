@@ -47,8 +47,8 @@ class _WalkThroughState extends State {
     final bool isOpened = prefs.getBool('firstOpen') ;
 
     if(isOpened){
-      Navigator.pop(context);
-      Navigator.pushNamed(context, "/welcome");
+
+      Navigator.pushReplacementNamed(context, "/welcome");
     }
 
   }

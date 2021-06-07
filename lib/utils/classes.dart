@@ -2,7 +2,7 @@ import 'package:cs310_app/utils/variables.dart';
 
 class User{
   String name, surname, username, info, id;
-  String image;
+  String image = "https://firebasestorage.googleapis.com/v0/b/cs310-7f676.appspot.com/o/16-168770_user-iconset-no-profile-picture-icon-circle-clipart.png?alt=media&token=dd5764a0-d267-484b-a341-9d74201f5fb9";
   bool active = true;
   bool private = false;
 

@@ -84,7 +84,7 @@ class _PrivateProfileState extends State<PrivateProfile> {
                           children: <Widget>[
                             CircleAvatar(
                               //TODO change to user image
-                              backgroundImage: NetworkImage(im),
+                              backgroundImage: NetworkImage(widget.user.image),
                               radius: 50,
                             ),
                             Padding(

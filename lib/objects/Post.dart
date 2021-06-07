@@ -47,7 +47,11 @@ class _PostCardState extends State<PostCard> {
                 child: Column(
                   children: [
                     ListTile(
-                      leading: CircleAvatar(),
+                      leading: CircleAvatar(
+                        //TODO change to user image
+                        backgroundImage: NetworkImage(widget.post.sender.image),
+                        radius: 50,
+                      ),
                       title: Text(widget.post.sender.name),
                       subtitle: Text(widget.post.sender.username),
                       trailing: IconButton(
@@ -67,8 +71,7 @@ class _PostCardState extends State<PostCard> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                   //Todo resim degistirilecek
-                  image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/cs310-7f676.appspot.com/o/1622915138057?alt=media&token=be8a8923-15fb-4164-b47c-4a25f168d64c"),
+                  image: NetworkImage(widget.post.image),
                   fit: BoxFit.cover,
                 )),
               ),

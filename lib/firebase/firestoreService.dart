@@ -34,6 +34,7 @@ class FirestoreServicee {
       querySnapshot.docs.forEach((doc) {
         classes.User tempUser = classes.User(username: doc["username"],surname: doc["surname"],name: doc["name"]);
         tempUser.id = doc.id;
+        tempUser.image = doc["imageUrl"];
         tempList.add(tempUser);
 
       });
@@ -42,7 +43,7 @@ class FirestoreServicee {
 
 
     searchUser = tempList;
-    await Future.delayed(Duration(milliseconds: 2000));
+
   }
 
   Future<void> getConnections(classes.User user) async {
@@ -146,10 +147,12 @@ class FirestoreServicee {
   }
 
   Future<void> changePicture(String userId, String url) async {
+
     await _firestore
         .collection('users')
         .doc(userId)
         .set({"imageUrl": url}, SetOptions(merge: true));
+    print("JAJAJAJAJAJAJAJ");
   }
 
   Future<void> removeConnection(String personId, String userId) async {

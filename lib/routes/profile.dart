@@ -3,6 +3,7 @@ import 'package:cs310_app/firebase/firestoreService.dart';
 import 'package:cs310_app/firebase/post_service.dart';
 import 'package:cs310_app/models/bottomBar.dart';
 import 'package:cs310_app/objects/Post.dart';
+import 'package:cs310_app/objects/PostSelf.dart';
 import 'package:cs310_app/utils/classes.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +89,7 @@ class _ProfileState extends State<Profile> {
                               },
                               child: CircleAvatar(
                                 //TODO change to user image
-                                backgroundImage: NetworkImage(im),
+                                backgroundImage: NetworkImage(LoggedUser.image),
                                 radius: 50,
                               ),
                             ),
@@ -180,7 +181,9 @@ class _ProfileState extends State<Profile> {
               (BuildContext context, int index) {
                 return Container(
                   height: 500,
-                  child: PostCard(
+                  child: widget.user.shared[index].sender.id != LoggedUser.id? PostCard(
+                    post: widget.user.shared[index],
+                  ):PostSelfCard(
                     post: widget.user.shared[index],
                   ),
                 );
@@ -214,13 +217,16 @@ class _ProfileState extends State<Profile> {
         firebase_storage.FirebaseStorage.instance.ref().child(imageName);
     firebase_storage.UploadTask uploadTask = reference.putFile(image);
     firebase_storage.TaskSnapshot taskSnapshot = await uploadTask;
-    await taskSnapshot.ref.getDownloadURL().then((url) {
+    await taskSnapshot.ref.getDownloadURL().then((url) async {
       setImageUrl(url);
       LoggedUser.image = url;
-      context.read<FirestoreServicee>().changePicture(LoggedUser.id, url);
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(LoggedUser.id)
+          .set({"imageUrl": url}, SetOptions(merge: true));
     });
 
-    //Todo resim ekleme eklenicek
   }
 
   _openPopup(context) {
@@ -236,7 +242,7 @@ class _ProfileState extends State<Profile> {
                 width: MediaQuery.of(context).size.width - 20,
                 height: MediaQuery.of(context).size.width + 20,
                 child: Image.network(
-                  im,
+                  LoggedUser.image,
                   fit: BoxFit.fill,
                 ),
               ),

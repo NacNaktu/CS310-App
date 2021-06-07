@@ -54,7 +54,7 @@ class _UserCardState extends State<UserCard> {
             children: [
               ListTile(
                 leading: CircleAvatar(
-                  backgroundImage: NetworkImage(im),
+                  backgroundImage: NetworkImage(widget.user.image),
                   radius: 50,
                 ),
                 title: Text(widget.user.name),

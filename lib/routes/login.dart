@@ -41,11 +41,7 @@ class _LoginState extends State<Login> {
 
         LoggedUser.image = documentSnapshot["imageUrl"];
         LoggedUser.id = userId;
-        print(LoggedUser.id + "gggggggggggggggggg" + userId);
         LoggedUser.info = documentSnapshot["bio"];
-
-
-
         LoggedUser.connections = documentSnapshot["connections"];
         LoggedUser.followers = documentSnapshot["followers"];
 
