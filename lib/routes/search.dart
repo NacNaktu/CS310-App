@@ -1,6 +1,7 @@
 
 
 import 'package:cs310_app/firebase/firestoreService.dart';
+import 'package:cs310_app/firebase/post_service.dart';
 import 'package:cs310_app/models/bottomBar.dart';
 import 'package:cs310_app/models/search_content.dart';
 import 'package:cs310_app/models/search_user.dart';
@@ -18,6 +19,7 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   String search;
+  String type;
 
   Future<void> loadUsers() async {
     await context.read<FirestoreServicee>().getAllUser();
@@ -56,6 +58,11 @@ class _SearchState extends State<Search> {
                     search = text;
                   });
                 },
+                onTap: () async{
+
+                  await context.read<PostService>().searchUserOrContent(search,type);
+
+                },
                 decoration: InputDecoration(
                   icon: IconButton(
                     splashRadius: 24,
@@ -69,6 +76,15 @@ class _SearchState extends State<Search> {
 
           ),
           bottom: TabBar(
+            onTap: (value){
+
+              final tempDict = {
+                0:"user",
+                1:"content"
+              };
+              type = tempDict[value];
+              print(type);
+            },
             indicatorColor: Colors.white,
             tabs: [
 
@@ -77,6 +93,7 @@ class _SearchState extends State<Search> {
               ),
               Tab(
                 text: "Content",
+
               ),
             ],
 

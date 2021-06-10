@@ -67,16 +67,13 @@ class PostService {
       });
     }
 
-    if(type == "profile"){
+    if (type == "profile") {
       LoggedUser.shared = returnList;
       profilePost = returnList;
-    }
-    else{
+    } else {
       feedPost = returnList;
     }
     await Future.delayed(Duration(seconds: 3));
-
-
   }
 
   Future<void> savePost(String description, File image, String userId) async {
@@ -285,40 +282,99 @@ class PostService {
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
-
-        if (description != ""){
-          await _firestore.collection('post').doc(postId).update({'description' : description});
+        if (description != "") {
+          await _firestore
+              .collection('post')
+              .doc(postId)
+              .update({'description': description});
         }
-
       } else {
         print("Post does not exist");
       }
     });
-
-
   }
 
   Future<dynamic> getAllUserAndFollowingPostsId(String userId) async {
     List<dynamic> followingList;
     List<dynamic> postList = [];
 
-      followingList = LoggedUser.connections;
-        for (var temp in followingList) {
-          await _firestore
-              .collection('postList')
-              .doc(temp)
-              .get()
-              .then((DocumentSnapshot documentSnapshot) {
-            if (documentSnapshot.exists) {
-              postList.addAll(documentSnapshot["postList"]);
-            } else {
-              print("user does not exist");
-            }
-          });
+    followingList = LoggedUser.connections;
+    for (var temp in followingList) {
+      await _firestore
+          .collection('postList')
+          .doc(temp)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          postList.addAll(documentSnapshot["postList"]);
+        } else {
+          print("user does not exist");
         }
-        print(postList.length);
-        await getAllUserPost(postList, "feed");
-      }
+      });
+    }
+    print(postList.length);
+    await getAllUserPost(postList, "feed");
+  }
 
-  dynamic list;
+  Future<dynamic> searchUserOrContent(String searchText, String type) async {
+    List<dynamic> followingList;
+    List<dynamic> postList = [];
+    print("-----------------------------------------");
+
+    if (type == "user") {
+      searchUser = [];
+      await _firestore
+          .collection("users")
+          .where("name", isEqualTo: searchText)
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          User tempUser = User(
+              name: doc["name"],
+              surname: doc["surname"],
+              username: doc["username"]);
+          tempUser.id = doc.id;
+          tempUser.image = doc["imageUrl"];
+
+          searchUser.add(tempUser);
+        });
+      });
+    } else {
+      searchContent = [];
+      await _firestore
+          .collection("post")
+          .where("description", isEqualTo: searchText)
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) async {
+          await _firestore
+              .collection("users")
+              .doc(doc["userId"])
+              .get()
+              .then((DocumentSnapshot documentSnapshotUser) {
+            User tempUser = User(
+                name: documentSnapshotUser["name"],
+                surname: documentSnapshotUser["surname"],
+                username: documentSnapshotUser["username"]);
+            tempUser.id = documentSnapshotUser.id;
+            tempUser.image = documentSnapshotUser["imageUrl"];
+
+            Post tempPost = Post(
+                description: doc["description"],
+                image: doc["imageUrl"],
+                sender: tempUser);
+            tempPost.id = doc.id;
+            tempPost.likedUsers = doc["likedUsers"];
+            tempPost.dislikedUsers = doc["dislikedUsers"];
+
+            searchContent.add(tempPost);
+          });
+
+
+        });
+      });
+    }
+
+    await getAllUserPost(postList, "feed");
+  }
 }
