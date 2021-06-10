@@ -250,4 +250,38 @@ class PostService {
       }
     });
   }
+  Future<void> removePost(String postId, String userId) async {
+
+
+    await _firestore
+        .collection('post')
+        .doc(postId)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        _firestore
+            .collection('postList')
+            .doc(postId).delete();
+
+
+      } else {
+        print("Post does not exist");
+      }
+    });
+
+    await _firestore
+        .collection('postList')
+        .doc(userId)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        _firestore.collection('postList').doc(userId).update({
+          "postList": FieldValue.arrayRemove([postId])});
+
+
+      } else {
+        print("Post does not exist");
+      }
+    });
+  }
 }

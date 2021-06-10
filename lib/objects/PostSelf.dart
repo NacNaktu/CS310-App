@@ -41,7 +41,7 @@ class _PostSelfCardState extends State<PostSelfCard> {
                     leading: CircleAvatar(
                       //TODO change to user image
                       backgroundImage: NetworkImage(LoggedUser.image),
-                      radius: 50,
+                      radius: 40,
                     ),
                     title: Text(widget.post.sender.name),
                     subtitle: Text(widget.post.sender.username),
@@ -191,6 +191,19 @@ class _PostSelfCardState extends State<PostSelfCard> {
                   ],
                 ),
                 SizedBox(height: 20.0),
+
+                IconButton(
+                  color: Colors.grey,
+                  icon: Icon(Icons.delete),
+                  onPressed: () async {
+                    await context
+                        .read<PostService>()
+                        .removePost(widget.post.id, LoggedUser.id);
+
+                    Navigator.pushReplacementNamed(context, ModalRoute.of(context).settings.name);
+
+                  },
+                ),
               ],
             ),
           ],

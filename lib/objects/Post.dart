@@ -1,5 +1,7 @@
 import 'package:cs310_app/firebase/post_service.dart';
 import 'package:cs310_app/routes/profile.dart';
+import 'package:cs310_app/routes/profilePerson.dart';
+import 'package:cs310_app/routes/profilePrivate.dart';
 import 'package:cs310_app/utils/classes.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/styles.dart';
@@ -35,12 +37,24 @@ class _PostCardState extends State<PostCard> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Profile(user: widget.post.sender)),
-                );
+                if(widget.post.sender.private){
+                  if(LoggedUser.connections.contains(widget.post.sender.id)){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PersonProfile(user: widget.post.sender)),
+                    );
+                  }else{
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PrivateProfile(user: widget.post.sender)),
+                    );
+                  }
+                }else{
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PersonProfile(user: widget.post.sender)),
+                  );
+                }
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -50,7 +64,7 @@ class _PostCardState extends State<PostCard> {
                       leading: CircleAvatar(
                         //TODO change to user image
                         backgroundImage: NetworkImage(widget.post.sender.image),
-                        radius: 50,
+                        radius: 40,
                       ),
                       title: Text(widget.post.sender.name),
                       subtitle: Text(widget.post.sender.username),

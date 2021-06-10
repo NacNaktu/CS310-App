@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_app/utils/classes.dart' as classes;
 import 'package:cs310_app/utils/grid_view.dart';
-import 'package:cs310_app/utils/variables.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart';
+
 
 class FirestoreServicee {
   final FirebaseFirestore _firestore;

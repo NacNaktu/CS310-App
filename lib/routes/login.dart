@@ -44,6 +44,7 @@ class _LoginState extends State<Login> {
         LoggedUser.info = documentSnapshot["bio"];
         LoggedUser.connections = documentSnapshot["connections"];
         LoggedUser.followers = documentSnapshot["followers"];
+        LoggedUser.private = !documentSnapshot["visible"];
 
 
 
