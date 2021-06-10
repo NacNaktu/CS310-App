@@ -84,7 +84,6 @@ class _PostCardState extends State<PostCard> {
               child: Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                  //Todo resim degistirilecek
                   image: NetworkImage(widget.post.image),
                   fit: BoxFit.cover,
                 )),

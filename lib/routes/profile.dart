@@ -6,6 +6,7 @@ import 'package:cs310_app/objects/Post.dart';
 import 'package:cs310_app/objects/PostSelf.dart';
 import 'package:cs310_app/utils/classes.dart';
 import 'package:cs310_app/utils/color.dart';
+import 'package:cs310_app/utils/grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:cs310_app/utils/styles.dart';
 import 'package:cs310_app/utils/variables.dart';
@@ -39,7 +40,7 @@ class _ProfileState extends State<Profile> {
 
   Future<void> loadPosts() async {
     await context.read<PostService>().getAllUserPostsId(LoggedUser.id);
-    await Future.delayed(Duration(milliseconds: 100000));
+
   }
 
   @protected
@@ -51,14 +52,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    loadPosts();
-    setState(() {
-      print("*****************************");
-      loadPosts();
-    });
 
     double add;
-    print(LoggedUser.id);
 
     add = widget.user.info != null ? 50 : 0;
     return Scaffold(
@@ -185,14 +180,14 @@ class _ProfileState extends State<Profile> {
               (BuildContext context, int index) {
                 return Container(
                   height: 500,
-                  child: widget.user.shared[index].sender.id != LoggedUser.id? PostCard(
-                    post: widget.user.shared[index],
+                  child: profilePost[index].sender.id != LoggedUser.id? PostCard(
+                    post: profilePost[index],
                   ):PostSelfCard(
-                    post: widget.user.shared[index],
+                    post: profilePost[index],
                   ),
                 );
               },
-              childCount: widget.user.shared.length,
+              childCount: profilePost.length,
             ),
           ),
         ],

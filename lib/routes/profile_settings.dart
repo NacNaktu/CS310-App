@@ -37,7 +37,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
 
   void changeVisible() async {
-    final temp = await context.read<FirestoreServicee>().getVisible("seUiDJ9iPVhtf0b7f0D7qIzpZEc2");
+    final temp = await context.read<FirestoreServicee>().getVisible(LoggedUser.id);
     _visible = temp;
   }
 

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_app/firebase/authentication_service.dart';
+import 'package:cs310_app/firebase/firestoreService.dart';
+import 'package:cs310_app/firebase/post_service.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/classes.dart' as classes;
 import 'package:cs310_app/utils/styles.dart';
@@ -7,6 +9,7 @@ import 'package:cs310_app/utils/variables.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
@@ -24,6 +27,16 @@ class _LoginState extends State<Login> {
   String userId;
 
   final _formKey = GlobalKey<FormState>();
+
+  Future<void> loadPostsFeed() async {
+    await context.read<PostService>().getAllUserAndFollowingPostsId(LoggedUser.id);
+  }
+
+  Future<void> loadPostsProfile() async {
+    await context.read<PostService>().getAllUserPostsId(LoggedUser.id);
+  }
+
+
 
   void getUser() async {
     await FirebaseFirestore.instance
@@ -46,8 +59,8 @@ class _LoginState extends State<Login> {
         LoggedUser.followers = documentSnapshot["followers"];
         LoggedUser.private = !documentSnapshot["visible"];
 
-
-
+        await loadPostsFeed();
+        await loadPostsProfile();
 
       }
     });

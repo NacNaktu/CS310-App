@@ -26,7 +26,7 @@ class _FeedState extends State<Feed> {
 
   Future<void> loadPosts() async {
     await context.read<PostService>().getAllUserAndFollowingPostsId(LoggedUser.id);
-    await Future.delayed(Duration(milliseconds: 100000));
+    await Future.delayed(Duration(seconds: 3));
   }
 
 
@@ -70,7 +70,7 @@ class _FeedState extends State<Feed> {
   // ignore: must_call_super
   void initState() {
     File tempFile;
-    // loadPosts();
+    loadPosts();
 
   }
 
@@ -78,7 +78,7 @@ class _FeedState extends State<Feed> {
 
   @override
   Widget build(BuildContext context) {
-    // loadPosts();
+    loadPosts();
 
 
     return  Scaffold(

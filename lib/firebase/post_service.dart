@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_app/utils/classes.dart';
+import 'package:cs310_app/utils/grid_view.dart';
 import 'package:cs310_app/utils/variables.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:http/http.dart';
@@ -27,11 +28,11 @@ class PostService {
         print("user does not exist");
       }
     });
-    getAllUserPost(list);
+    getAllUserPost(list, "profile");
     return list;
   }
 
-  Future<Void> getAllUserPost(List<dynamic> postIdList) async {
+  Future<Void> getAllUserPost(List<dynamic> postIdList, String type) async {
     List<Post> returnList = [];
     for (var temp in postIdList) {
       await _firestore
@@ -44,12 +45,13 @@ class PostService {
               .collection("users")
               .doc(documentSnapshot["userId"])
               .get()
-              .then((DocumentSnapshot documentSnapshot1) {
+              .then((DocumentSnapshot documentSnapshotUser) {
             User tempUser = User(
-                name: documentSnapshot1["name"],
-                surname: documentSnapshot1["surname"],
-                username: documentSnapshot1["username"]);
+                name: documentSnapshotUser["name"],
+                surname: documentSnapshotUser["surname"],
+                username: documentSnapshotUser["username"]);
             tempUser.id = documentSnapshot["userId"];
+            tempUser.image = documentSnapshotUser["imageUrl"];
             Post tempPost = Post(
                 description: documentSnapshot["description"],
                 image: documentSnapshot["imageUrl"],
@@ -64,7 +66,17 @@ class PostService {
         }
       });
     }
-    LoggedUser.shared = returnList;
+
+    if(type == "profile"){
+      LoggedUser.shared = returnList;
+      profilePost = returnList;
+    }
+    else{
+      feedPost = returnList;
+    }
+    await Future.delayed(Duration(seconds: 3));
+
+
   }
 
   Future<void> savePost(String description, File image, String userId) async {
@@ -292,15 +304,8 @@ class PostService {
   Future<dynamic> getAllUserAndFollowingPostsId(String userId) async {
     List<dynamic> followingList;
     List<dynamic> postList = [];
-    await _firestore
-        .collection("users")
-        .doc(userId)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) async {
-      if (documentSnapshot.exists) {
-        followingList = documentSnapshot["connections"];
-        followingList.add(userId);
 
+      followingList = LoggedUser.connections;
         for (var temp in followingList) {
           await _firestore
               .collection('postList')
@@ -315,12 +320,8 @@ class PostService {
           });
         }
         print(postList.length);
-        await getAllUserPost(postList);
-      } else {
-        print("user does not exist");
+        await getAllUserPost(postList, "feed");
       }
-    });
-  }
 
   dynamic list;
 }

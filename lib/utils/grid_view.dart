@@ -7,6 +7,8 @@ import 'classes.dart';
 
 List<Comment> commentLst = [];
 
+List<Post> profilePost = [];
+
 List<Post> feedPost = [
   Post(
     sender: User(
