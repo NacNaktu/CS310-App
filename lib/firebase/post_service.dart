@@ -284,4 +284,31 @@ class PostService {
       }
     });
   }
+
+  Future<void> editPost(String postId, String image, String description) async {
+
+
+    await _firestore
+        .collection('post')
+        .doc(postId)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+
+        if (image != ""){
+          FirebaseFirestore.instance.collection('post').doc(postId).set({'imageUrl' : image});
+        }
+        if (image != ""){
+          FirebaseFirestore.instance.collection('post').doc(postId).set({'description' : description});
+        }
+
+
+
+      } else {
+        print("Post does not exist");
+      }
+    });
+
+
+  }
 }

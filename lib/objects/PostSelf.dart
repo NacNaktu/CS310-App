@@ -1,5 +1,4 @@
 import 'package:cs310_app/firebase/post_service.dart';
-import 'package:cs310_app/routes/profile.dart';
 import 'package:cs310_app/utils/classes.dart';
 import 'package:cs310_app/utils/color.dart';
 import 'package:cs310_app/utils/styles.dart';
@@ -7,6 +6,10 @@ import 'package:cs310_app/utils/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
 
 import 'Com.dart';
 
@@ -24,6 +27,23 @@ class PostSelfCard extends StatefulWidget {
 
 class _PostSelfCardState extends State<PostSelfCard> {
   String tempComment;
+  String description='';
+  final _formKey = GlobalKey<FormState>();
+  String imageUrl = '';
+
+  void setImageUrl(String tempUrl){
+    if(tempUrl != widget.post.image){
+      this.imageUrl = tempUrl;
+    }else{
+      this.imageUrl = widget.post.image;
+    }
+  }
+  void setTempImage(File tempUrl){
+    setState(() {
+      tempFile = tempUrl;
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +68,7 @@ class _PostSelfCardState extends State<PostSelfCard> {
                     trailing: IconButton(
                       icon: Icon(Icons.edit),
                       onPressed: () async {
-                        //TODO CHANGE IN DATABASE
-                        //Todo resim degistirilecek
+                        _editPost(context);
                       },
                     ),
                   ),
@@ -285,5 +304,92 @@ class _PostSelfCardState extends State<PostSelfCard> {
             ),
           ),
         ]).show();
+  }
+
+  _editPost(context1) {
+    Alert(
+        context: context1,
+        title: "Add Post",
+        content: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                ),
+                onSaved: (String value) {
+                  if (value != null){
+                    description = value;
+                  }
+                },
+              ),
+
+              InkWell(
+                onTap: (){
+                  selectAndPickImage();
+
+
+                },
+                child: CircleAvatar(
+                  backgroundImage: tempFile != null ? FileImage(tempFile) : NetworkImage(im),
+                  radius: 60,
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.add_photo_alternate,
+                    size: 60,
+                    color: tempFile != null ? Colors.transparent : Colors.grey,
+                  ),
+                ),
+              ),
+
+            ],
+          ),
+        ),
+        buttons: [
+          DialogButton(
+            onPressed: () async {
+              _formKey.currentState.save();
+
+              await context.read<PostService>().editPost(widget.post.id, imageUrl, description);
+
+
+
+
+              Navigator.pop(context1);
+              Navigator.pushNamed(context1, ModalRoute.of(context).settings.name);
+            },
+            child: Text(
+              "Add",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          ),
+        ]).show();
+  }
+
+  Future<void> selectAndPickImage() async{
+
+    File _image;
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+
+    if (pickedFile != null) {
+      _image = File(pickedFile.path,);
+      setTempImage(_image);
+    } else {
+      print('No image selected.');
+    }
+
+  }
+
+  uploadToStorage(File image) async{
+    String imageName = DateTime.now().millisecondsSinceEpoch.toString();
+    firebase_storage.Reference reference =   firebase_storage.FirebaseStorage.instance.ref().child(imageName);
+    firebase_storage.UploadTask uploadTask = reference.putFile(image);
+    firebase_storage.TaskSnapshot taskSnapshot =  await uploadTask;
+    await taskSnapshot.ref.getDownloadURL().then((url){
+      setImageUrl(url);
+    });
+
   }
 }
