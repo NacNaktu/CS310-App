@@ -52,6 +52,10 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     loadPosts();
+    setState(() {
+      print("*****************************");
+      loadPosts();
+    });
 
     double add;
     print(LoggedUser.id);

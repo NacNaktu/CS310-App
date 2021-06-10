@@ -38,15 +38,13 @@ class PostService {
           .collection('post')
           .doc(temp)
           .get()
-          .then((DocumentSnapshot documentSnapshot) {
+          .then((DocumentSnapshot documentSnapshot) async {
         if (documentSnapshot.exists) {
-          print(documentSnapshot["description"]);
-          _firestore
+          await _firestore
               .collection("users")
               .doc(documentSnapshot["userId"])
               .get()
               .then((DocumentSnapshot documentSnapshot1) {
-            print(documentSnapshot1);
             User tempUser = User(
                 name: documentSnapshot1["name"],
                 surname: documentSnapshot1["surname"],
@@ -60,16 +58,12 @@ class PostService {
             tempPost.likedUsers = documentSnapshot["likedUsers"];
             tempPost.dislikedUsers = documentSnapshot["dislikedUsers"];
             returnList.add(tempPost);
-            print("deneme123");
           });
         } else {
           print("post does not exist");
         }
       });
     }
-    print("////////////////////////////");
-    print(returnList.length);
-    print(returnList);
     LoggedUser.shared = returnList;
   }
 
@@ -79,15 +73,14 @@ class PostService {
     DocumentReference post1 =
         FirebaseFirestore.instance.collection('post').doc(post1Id);
     post1.set({
-      //TODO id degisecek
       "userId": userId,
       "description": description,
       "imageUrl": url,
       "date": DateTime.now().toString(),
       "likedUsers": [],
-      "commentList": [], "dislikedUsers": []
+      "commentList": [],
+      "dislikedUsers": []
     });
-    // //TODO id degisecek
     DocumentReference postList =
         FirebaseFirestore.instance.collection('postList').doc(userId);
     postList.update({
@@ -104,14 +97,12 @@ class PostService {
     firebase_storage.UploadTask uploadTask = reference.putFile(image);
     firebase_storage.TaskSnapshot taskSnapshot = await uploadTask;
     await taskSnapshot.ref.getDownloadURL().then((url) {
-      print(url);
       tempUrl = url;
     });
     return tempUrl;
   }
 
   Future<void> likePost(String postId, String userId) async {
-    print(' icerde like');
     await _firestore
         .collection('post')
         .doc(postId)
@@ -131,7 +122,6 @@ class PostService {
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        // print(documentSnapshot["postList"]);
         List<dynamic> list = documentSnapshot["likedUsers"];
         if (list.contains(userId)) {
           print("Post is already liked");
@@ -150,7 +140,6 @@ class PostService {
   }
 
   Future<void> dislikePost(String postId, String userId) async {
-    print("icerde");
     await _firestore
         .collection('post')
         .doc(postId)
@@ -170,7 +159,6 @@ class PostService {
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        // print(documentSnapshot["postList"]);
         List<dynamic> list = documentSnapshot["dislikedUsers"];
         if (list.contains(userId)) {
           print("Post is already disliked");
@@ -189,15 +177,12 @@ class PostService {
   }
 
   Future<void> bookmarkPost(String postId, String userId) async {
-
-
     await _firestore
         .collection('users')
         .doc(userId)
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        // print(documentSnapshot["postList"]);
         List<dynamic> list = documentSnapshot["bookmarkList"];
         if (list.contains(postId)) {
           print("Post is already disliked");
@@ -250,20 +235,15 @@ class PostService {
       }
     });
   }
+
   Future<void> removePost(String postId, String userId) async {
-
-
     await _firestore
         .collection('post')
         .doc(postId)
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        _firestore
-            .collection('postList')
-            .doc(postId).delete();
-
-
+        _firestore.collection('postList').doc(postId).delete();
       } else {
         print("Post does not exist");
       }
@@ -276,9 +256,8 @@ class PostService {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         _firestore.collection('postList').doc(userId).update({
-          "postList": FieldValue.arrayRemove([postId])});
-
-
+          "postList": FieldValue.arrayRemove([postId])
+        });
       } else {
         print("Post does not exist");
       }
@@ -286,8 +265,6 @@ class PostService {
   }
 
   Future<void> editPost(String postId, String image, String description) async {
-
-
     await _firestore
         .collection('post')
         .doc(postId)
@@ -311,4 +288,39 @@ class PostService {
 
 
   }
+
+  Future<dynamic> getAllUserAndFollowingPostsId(String userId) async {
+    List<dynamic> followingList;
+    List<dynamic> postList = [];
+    await _firestore
+        .collection("users")
+        .doc(userId)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      if (documentSnapshot.exists) {
+        followingList = documentSnapshot["connections"];
+        followingList.add(userId);
+
+        for (var temp in followingList) {
+          await _firestore
+              .collection('postList')
+              .doc(temp)
+              .get()
+              .then((DocumentSnapshot documentSnapshot) {
+            if (documentSnapshot.exists) {
+              postList.addAll(documentSnapshot["postList"]);
+            } else {
+              print("user does not exist");
+            }
+          });
+        }
+        print(postList.length);
+        await getAllUserPost(postList);
+      } else {
+        print("user does not exist");
+      }
+    });
+  }
+
+  dynamic list;
 }

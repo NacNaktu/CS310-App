@@ -24,6 +24,11 @@ class _FeedState extends State<Feed> {
   final _formKey = GlobalKey<FormState>();
   String imageUrl = "";
 
+  Future<void> loadPosts() async {
+    await context.read<PostService>().getAllUserAndFollowingPostsId(LoggedUser.id);
+    await Future.delayed(Duration(milliseconds: 100000));
+  }
+
 
   void setImageUrl(String tempUrl){
     this.imageUrl = tempUrl;
@@ -65,12 +70,15 @@ class _FeedState extends State<Feed> {
   // ignore: must_call_super
   void initState() {
     File tempFile;
+    // loadPosts();
 
   }
 
 
+
   @override
   Widget build(BuildContext context) {
+    // loadPosts();
 
 
     return  Scaffold(
