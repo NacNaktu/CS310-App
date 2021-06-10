@@ -309,7 +309,7 @@ class _PostSelfCardState extends State<PostSelfCard> {
   _editPost(context1) {
     Alert(
         context: context1,
-        title: "Add Post",
+        title: "Change Post",
         content: Form(
           key: _formKey,
           child: Column(
@@ -325,23 +325,6 @@ class _PostSelfCardState extends State<PostSelfCard> {
                 },
               ),
 
-              InkWell(
-                onTap: (){
-                  selectAndPickImage();
-
-
-                },
-                child: CircleAvatar(
-                  backgroundImage: tempFile != null ? FileImage(tempFile) : NetworkImage(im),
-                  radius: 60,
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.add_photo_alternate,
-                    size: 60,
-                    color: tempFile != null ? Colors.transparent : Colors.grey,
-                  ),
-                ),
-              ),
-
             ],
           ),
         ),
@@ -350,7 +333,7 @@ class _PostSelfCardState extends State<PostSelfCard> {
             onPressed: () async {
               _formKey.currentState.save();
 
-              await context.read<PostService>().editPost(widget.post.id, imageUrl, description);
+              await context.read<PostService>().editPost(widget.post.id, description);
 
 
 
@@ -359,7 +342,7 @@ class _PostSelfCardState extends State<PostSelfCard> {
               Navigator.pushNamed(context1, ModalRoute.of(context).settings.name);
             },
             child: Text(
-              "Add",
+              "Change",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),

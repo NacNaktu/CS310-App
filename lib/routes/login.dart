@@ -61,6 +61,8 @@ class _LoginState extends State<Login> {
 
         await loadPostsFeed();
         await loadPostsProfile();
+        await context.read<PostService>().getAllUserPostsId(LoggedUser.id);
+        await context.read<PostService>().getAllUserAndFollowingPostsId(LoggedUser.id);
 
       }
     });

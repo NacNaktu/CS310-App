@@ -276,22 +276,19 @@ class PostService {
     });
   }
 
-  Future<void> editPost(String postId, String image, String description) async {
+  Future<void> editPost(String postId, String description) async {
+    print("************************************");
+    print(postId);
     await _firestore
         .collection('post')
         .doc(postId)
         .get()
-        .then((DocumentSnapshot documentSnapshot) {
+        .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
 
-        if (image != ""){
-          FirebaseFirestore.instance.collection('post').doc(postId).set({'imageUrl' : image});
+        if (description != ""){
+          await _firestore.collection('post').doc(postId).update({'description' : description});
         }
-        if (image != ""){
-          FirebaseFirestore.instance.collection('post').doc(postId).set({'description' : description});
-        }
-
-
 
       } else {
         print("Post does not exist");
